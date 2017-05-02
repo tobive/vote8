@@ -1,0 +1,55 @@
+.main {
+  background-color: #FBF4B4;
+}
+
+.home_footer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-top: 50px;
+  color: #515151;
+  background-color: #ECB588;
+}
+
+.jumbotron {
+  color: #515151 !important;
+  background-color: #F2C894 !important;
+}
+
+.rand_poll_container {
+  padding-top: 10px;
+  padding-bottom: 50px;
+  margin-top: 50;
+  margin-bottom: 30px;
+  border: 2px solid #FBE1A3;
+  border-radius: 8px;
+  background-color: #FBE1A3;
+}
+
+.late_poll_container {
+  padding-bottom: 30px;
+
+}
+
+.late_poll {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.poll_pill {
+  height: 50px;
+  padding-top: 13px;
+  padding-left: 10px;
+  margin-bottom: 1px;
+  border: 2px solid #FBE1A3;
+  border-radius: 7px;
+  background-color: #FBE1A3;
+  color: #515151;
+}
+
+.xxx {
+  background-color: blue !important;
+}
+
+.input_box {
+  width: 550px;
+}
