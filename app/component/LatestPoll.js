@@ -11,7 +11,7 @@ export class LatestPoll extends Component {
           <h3><b>Latest Poll</b></h3>
           <div className="late_poll">
             {arr.map(function(x){
-              return <PollPill IdPoll={x} goToPoll={xxx} />;
+              return <PollPill key={x} IdPoll={x} goToPoll={xxx} />;
             })}
           </div>
         </div>

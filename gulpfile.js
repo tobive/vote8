@@ -13,7 +13,7 @@ var plumber = require('gulp-plumber');
 var BUILD_DIR = 'dist/'
 
 gulp.task('serve', function() {
-  var server = gls.new('server/server.js');
+  var server = gls.new('server.js');
   server.start();
 });
 

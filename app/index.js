@@ -8,29 +8,6 @@ import Home from './component/Home';
 import Vote from './component/Vote';
 //import './index.css';
 
-// ReactDOM.render(
-//   <Router history={browserHistory}>
-//     <Route path="/" component={Main}>
-//       <IndexRoute component={Home}/>
-//       <Route path="/create" component={CreatePoll} />
-//       <Route path="/vote" component={VotePage}/>
-//     </Route>
-//   </Router>,
-//   document.getElementById('root')
-// );
-
-// ReactDOM.render(
-//   (<BrowserRouter>
-//     <main>
-//     <Switch>
-//       <Route exact path='/' component={temp}/>
-//
-//     </Switch>
-//     </main>
-//   </BrowserRouter>),
-//   document.getElementById('root')
-// );
-
 const home = () => (
   <div>
   <div>Home</div>

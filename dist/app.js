@@ -419,7 +419,7 @@ var LatestPoll = exports.LatestPoll = function (_Component) {
             'div',
             { className: 'late_poll' },
             arr.map(function (x) {
-              return _react2.default.createElement(_PollPill2.default, { IdPoll: x, goToPoll: xxx });
+              return _react2.default.createElement(_PollPill2.default, { key: x, IdPoll: x, goToPoll: xxx });
             })
           )
         )
@@ -731,6 +731,7 @@ var OptionFormAdd = exports.OptionFormAdd = function (_Component) {
         arrPrintedOption.map(function (x, i) {
           var value = _this4.returnValue(x);
           return _react2.default.createElement(_OptionForm2.default, {
+            key: x,
             idForm: x, placeHolder: "option " + (i + 1),
             deleteOption: _this4.deleteOption,
             name: _this4.state.options[x] ? _this4.state.options[x] : value,
@@ -1108,7 +1109,7 @@ function VoteLabel(props) {
     _react2.default.createElement(
       "label",
       null,
-      _react2.default.createElement("input", { type: "radio", name: "ballot", value: props.name }),
+      _react2.default.createElement("input", { type: "radio", name: "ballot", value: props.name, key: props.name }),
       props.name
     )
   );
@@ -1157,9 +1158,9 @@ var Vote = exports.Vote = function (_Component) {
         ),
         _react2.default.createElement(
           "div",
-          { id: obj._id, onChange: this.selectedValue.bind(this) },
+          { key: obj._id, id: obj._id, onChange: this.selectedValue.bind(this) },
           obj.option.map(function (opt) {
-            return _react2.default.createElement(VoteLabel, { name: opt.name });
+            return _react2.default.createElement(VoteLabel, { name: opt.name, key: opt.name });
           })
         ),
         _react2.default.createElement(

@@ -89,6 +89,7 @@ export class OptionFormAdd extends Component {
             let value = this.returnValue(x);
             return (
               <OptionForm
+               key={x}
                idForm={x} placeHolder={"option " + (i+1)}
                deleteOption={this.deleteOption}
                name={
