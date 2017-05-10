@@ -12,6 +12,8 @@
     "axios": "^0.16.1",
     "chart.js": "^1.1.1",
     "express": "^4.15.2",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.8",
     "pathmodify": "^0.5.0",
     "react": "^15.5.4",
     "react-chartjs": "^0.8.0",

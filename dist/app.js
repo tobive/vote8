@@ -1228,29 +1228,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //import './index.css';
 
-// ReactDOM.render(
-//   <Router history={browserHistory}>
-//     <Route path="/" component={Main}>
-//       <IndexRoute component={Home}/>
-//       <Route path="/create" component={CreatePoll} />
-//       <Route path="/vote" component={VotePage}/>
-//     </Route>
-//   </Router>,
-//   document.getElementById('root')
-// );
-
-// ReactDOM.render(
-//   (<BrowserRouter>
-//     <main>
-//     <Switch>
-//       <Route exact path='/' component={temp}/>
-//
-//     </Switch>
-//     </main>
-//   </BrowserRouter>),
-//   document.getElementById('root')
-// );
-
 var home = function home() {
   return _react2.default.createElement(
     'div',

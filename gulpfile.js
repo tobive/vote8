@@ -10,7 +10,7 @@ var pathmodify = require('pathmodify');
 var watchify = require('watchify');
 var plumber = require('gulp-plumber');
 
-var BUILD_DIR = 'dist/'
+var BUILD_DIR = 'dist/';
 
 gulp.task('serve', function() {
   var server = gls.new('server.js');
@@ -83,4 +83,4 @@ gulp.task('watch:html', function() {
 
 gulp.task('watch', ['webserver', 'watch:html', 'watch:js']);
 
-gulp.task('run', ['build', 'webserver']);
+gulp.task('run', ['build', 'serve']);
