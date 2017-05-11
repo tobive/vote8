@@ -3,56 +3,62 @@ var assert = require('assert');
 var User = require('./db/userdb');
 var Poll = require('./db/polldb');
 const URL = process.env.MONGOLAB_URI || '//localhost/';
-const DB_NAME = 'vote8';
+const DB_NAME = 'test8';
 
-mongoose.connect('mongodb:' + URL + DB_NAME);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("db connected");
-  var newUser = new User({
-    username: 'praboe',
-    password: 'praboer'
-  });
-  var promise = newUser.save(function (err) {
-    if(err) return console.error(err);
-  })
-  promise.then(function (newUser) {
-    newUser.find(function (err, User) {
-      if(err) return console.error(err);
-      console.log(User);
-    })
-  });
-})
-
-// mongoose.connect('mongodb://localhost/jotun5');
+// mongoose.connect('mongodb:' + URL + DB_NAME);
 // var db = mongoose.connection;
 // db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', function() {
 //   console.log("db connected");
-//   var silence = new Kitten({name: 765});
-//   console.log(silence.name);
-//   var fluffy = new Kitten({
-//     name: 'joko',
-//     options: [{
-//       id: 1,
-//       name: "polo",
-//       tally: 5
-//     }]
+//   var newUser = new User({
+//     username: 'praboe',
+//     password: 'praboer'
 //   });
-//   var promise = fluffy.save(function (err, fluffy) {
-//     if (err) return console.error(err);
-//     fluffy.speak();
-//     fluffy.list();
+//   var newPoll = new Poll({
+//     title: "siapa yg kuat",
+//     desc: "",
+//     options: [{name: "goku", tally: 10},
+//               {name: "supes", tally: 11}],
+//     date: new Date()
 //   });
-//   promise.then(console.log("find all kitten-------"))
-//     .then(() => Kitten.find(function (err, kucing) {
+//   var promise = newUser.save(function (err) {
+//     if(err) return console.error(err);
+//   });
+//   var promise2 = newPoll.save(function (err) {
+//     if(err) return console.error(err);
+//   })
+//   promise.then(function (newUser) {
+//     newUser.find(function (err, User) {
 //       if(err) return console.error(err);
-//       console.log("isi kucing:");
-//       console.log(kucing);
-//     }))
-//     .then(console.log("Owariiii---"));
-// });
+//       console.log(User);
+//     })
+//   });
+//   promise2.then(function (newPoll) {
+//     newUser.find(function (err, Poll) {
+//       if(err) return console.error(err);
+//       console.log(Poll);
+//     })
+//   });
+// })
+
+module.exports.save = function(obj, callback) {
+  mongoose.connect('mongodb:' + URL + DB_NAME);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function() {
+    console.log("db connected");
+    var newPoll = new Poll(obj);
+    var promise2 = newPoll.save(function (err) {
+      if(err) return console.error(err);
+    })
+    promise2.then(function (newPoll) {
+      newUser.find(function (err, Poll) {
+        if(err) return console.error(err);
+        console.log(Poll);
+      })
+    });
+  })
+}
 
 // var createPoll = function() {
 //

@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var pollSchema = mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+  //userId: mongoose.Schema.Types.ObjectId,
   title: String,
-  desc: String,
+  description: String,
   options: [{
     name: String,
     tally: Number

@@ -26,7 +26,7 @@ export class PollForm extends Component {
   optionsChangeHandler(obj) {
     this.setState({
       options: obj
-    }, ()=> console.log("call from PollForm: ",this.state));
+    });
   }
 
   render() {

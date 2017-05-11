@@ -822,18 +822,14 @@ var PollForm = exports.PollForm = function (_Component) {
   }, {
     key: 'optionsChangeHandler',
     value: function optionsChangeHandler(obj) {
-      var _this2 = this;
-
       this.setState({
         options: obj
-      }, function () {
-        return console.log("call from PollForm: ", _this2.state);
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var objPoll = this.props.poll;
       var savedPoll = 5;
@@ -908,7 +904,7 @@ var PollForm = exports.PollForm = function (_Component) {
                 className: 'btn btn-lg btn-success',
                 id: 'saveFormButton',
                 onClick: function onClick() {
-                  return _this3.props.savePoll(_this3.state);
+                  return _this2.props.savePoll(_this2.state);
                 }
               },
               'Save'
@@ -971,7 +967,23 @@ var PollFormController = exports.PollFormController = function (_Component) {
   _createClass(PollFormController, [{
     key: 'savePollX',
     value: function savePollX(obj) {
-      console.log("received state: ", obj);
+      var postObj = obj;
+      var keys = Object.keys(obj.options);
+      var arrOpt = [];
+      for (var i = 0; i < keys.length; i++) {
+        var objTmp = {
+          name: obj.options[keys[i]]
+        };
+        arrOpt.push(objTmp);
+      }
+      postObj.options = arrOpt;
+      postObj.date = new Date();
+      console.log("received state: ", JSON.stringify(postObj));
+
+      var req = new XMLHttpRequest();
+      req.open('POST', 'http://localhost:8000/postnew');
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      req.send(JSON.stringify(postObj));
     }
   }, {
     key: 'render',
