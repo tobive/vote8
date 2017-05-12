@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var path = require('path');
 var database = require('./server/database');
 const PORT = process.env.PORT || 8000;
@@ -14,8 +15,10 @@ app.get('/api', function (req, res) {
   res.send("Hello World!");
 });
 
+app.use(bodyParser.json());
 app.post('/postnew', function (req, res) {
-  console.log("masuk post new: " + JSON.stringify(req));
+  console.log(req.body);
+  database.save(req.body, () => console.log("SAVED"));
 });
 
 app.listen(PORT, function () {

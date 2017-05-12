@@ -57,6 +57,7 @@ module.exports.save = function(obj, callback) {
         console.log(Poll);
       })
     });
+    callback();
   })
 }
 
