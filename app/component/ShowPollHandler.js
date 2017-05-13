@@ -14,7 +14,7 @@ export class ShowPollHandler extends Component {
         console.log("castBallot :",obj);
         var objResult = this.props.poll;
         for (let i=0;i<objResult.options.length;i++) {
-          if (objResult.options[i].id==obj.idBallot) {
+          if (objResult.options[i].id===obj.idBallot) {
             if (objResult.options[i].tally) {
               objResult.options[i].tally++;
             } else {
@@ -28,14 +28,14 @@ export class ShowPollHandler extends Component {
     }
 
     render() {
-        return(
-          <ShowPoll
-            poll={this.props.poll}
-            submitVote={this.submitVote}
-            sendBallot={this.castBallot}
-            resultPoll={this.state.result}
-            />
-        );
+      return(
+        <ShowPoll
+          poll={this.props.poll}
+          submitVote={this.submitVote}
+          sendBallot={this.castBallot}
+          resultPoll={this.state.result}
+          />
+      );
     }
 }
 

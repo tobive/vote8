@@ -7,7 +7,7 @@ export class ShowPoll extends Component {
         super(props);
         const objPoll = props.poll;
         this.state = {
-          idPoll: objPoll.id,
+          idPoll: objPoll._id,
           idBallot: null,
           resultPoll: props.resultPoll
         };
@@ -29,19 +29,14 @@ export class ShowPoll extends Component {
     }
 
     render() {
-
-        var poll = this.props.poll
+        var poll = this.props.poll;
         return(
           <section>
             <div className="row">
               <div className="show_left col-sm-6">
                 <div className="poll_box text-center">
                   <Vote
-                    id={poll.id}
-                    title={poll.title}
-                    options={poll.options}
-                    description={poll.description}
-                    submitVote={this.submitVote}
+                    obj = {this.props.poll}
                     />
                 </div>
               </div>

@@ -28,22 +28,14 @@ export class Vote extends Component {
     }
 
     render() {
-        var obj = {
-          _id: 10,
-          title: "Who's the prettiest among goddess",
-          option: [
-            {name: "Uemura Rina"},
-            {name: "Kojima Mako"},
-            {name: "Murayama Yuiri"}
-          ]
-        };
+        let obj = this.props.obj;
         return(
           <div>
             <div>
               {obj.title}
             </div>
             <div key={obj._id} id={obj._id} onChange={this.selectedValue.bind(this)}>
-              {obj.option.map(function(opt){
+              {obj.options.map(function(opt){
                   return <VoteLabel name={opt.name} key={opt.name}/>
                 })
               }
@@ -57,9 +49,6 @@ export class Vote extends Component {
                 }}>
                 Vote!
               </button>
-            </div>
-            <div>
-              <a href="#">View Result</a>
             </div>
           </div>
         );

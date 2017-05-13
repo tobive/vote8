@@ -3,8 +3,8 @@ import ShowPollHandler from './ShowPollHandler';
 
 export class VotePage extends Component {
     render() {
-        var obj = {
-          id: 10,
+        var obje = {
+          _id: 10,
           title: "Who's the prettiest among goddess",
           options: [
             {id: 9, name: "Uemura Rina"},
@@ -14,7 +14,7 @@ export class VotePage extends Component {
           description: "They're all a blessing in this withered world"
         };
         return(
-            <ShowPollHandler poll={obj}/>
+            <ShowPollHandler poll={this.props.location.state}/>
         );
     }
 };

@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '/cygwin64/home/Riyuyu/vote8/dist', 'index.html'));
 });
 
-app.get('/api', function (req, res) {
+app.get('/getRandom', function (req, res) {
   console.log("enter api");
   res.send("Hello World!");
 });
