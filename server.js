@@ -17,7 +17,7 @@ app.get('/getRandom', function (req, res) {
 
 app.use(bodyParser.json());
 app.post('/postnew', function (req, res) {
-  console.log(req.body);
+  console.log("from server.js: " + JSON.stringify(req.body));
   database.save(req.body, () => console.log("SAVED"));
 });
 

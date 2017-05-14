@@ -8,7 +8,8 @@ var pollSchema = mongoose.Schema({
     name: String,
     tally: Number
   }],
-  date: Date
+  date: Date,
+  link: String
 });
 
 var Poll = mongoose.model('Poll', pollSchema);

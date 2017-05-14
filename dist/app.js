@@ -1055,12 +1055,12 @@ var PollFormController = exports.PollFormController = function (_Component) {
   _createClass(PollFormController, [{
     key: 'savePollX',
     value: function savePollX(obj) {
-      var postObj = obj;
-      var keys = Object.keys(obj.options);
+      var postObj = Object.assign({}, obj);
+      var keys = Object.keys(postObj.options);
       var arrOpt = [];
       for (var i = 0; i < keys.length; i++) {
         var objTmp = {
-          name: obj.options[keys[i]]
+          name: postObj.options[keys[i]]
         };
         arrOpt.push(objTmp);
       }
