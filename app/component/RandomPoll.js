@@ -14,12 +14,31 @@ export class RandomPoll extends Component {
         {id: 10, name: "Murayama Yuiri"}
       ]
     };
+    //let objc = {};
     this.state = {
       obj: objc
     };
   }
 
+
+  componentDidMount() {
+    fetch('http://localhost:8000/getRandom')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        let bjc = responseJson;
+        console.log("FETCHRANDMPOL :", JSON.stringify(bjc));
+        this.setState({
+          obj : bjc
+        });
+        //return responseJson;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
+    console.log("RENDERING RANDOMPOLL");
     return(
       <div>
         <div className="rand_poll_container">

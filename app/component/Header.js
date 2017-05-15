@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export class Header extends Component {
   render() {
@@ -10,7 +11,7 @@ export class Header extends Component {
               <a className="navbar-brand" href="#">Vote8</a>
             </div>
             <ul className="nav navbar-nav">
-              <li><a href="#">Login</a></li>
+              <li><Link to="/getRandom">Login</Link></li>
             </ul>
           </nav>
         </div>

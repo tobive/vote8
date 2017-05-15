@@ -11,8 +11,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getRandom', function (req, res) {
-  console.log("enter api");
-  res.send("Hello World!");
+  database.getRandom(function(obj) {
+    if(!obj) console.log("Data empty");
+    console.log("FROM SERVER JS: ", obj);
+    res.json(obj);
+  });
 });
 
 app.use(bodyParser.json());

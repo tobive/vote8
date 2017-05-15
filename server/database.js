@@ -9,14 +9,23 @@ const URL = process.env.MONGOLAB_URI || '//localhost/';
 const DB_NAME = 'test8';
 
 
-module.exports.getRandom = function(obj, callback) {
+module.exports.getRandom = function(callback) {
   mongoose.connect('mongodb:' + URL + DB_NAME);
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function() {
     console.log("db connected");
-    
-    callback();
+    Poll.count().exec(function (err, count) {
+      if(err) console.error("getRandom- count err: ", err);
+      var random = Math.floor(Math.random() * count);
+      console.log("RANDOM NYA: " + random);
+      Poll.findOne().skip(random).exec(function (err, result) {
+        if(err) console.error("getRandom- findOne err: ", err);
+        callback(result);
+        db.close();
+      });
+    })
+    callback;
   })
 }
 

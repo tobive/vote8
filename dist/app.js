@@ -84,7 +84,7 @@ function Footer() {
 exports.default = Footer;
 
 },{"react":543}],3:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -93,9 +93,11 @@ exports.Header = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = require('react-router-dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -115,36 +117,36 @@ var Header = exports.Header = function (_Component) {
   }
 
   _createClass(Header, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "section",
+        'section',
         null,
         _react2.default.createElement(
-          "div",
-          { className: "header" },
+          'div',
+          { className: 'header' },
           _react2.default.createElement(
-            "nav",
-            { className: "navbar navbar-default" },
+            'nav',
+            { className: 'navbar navbar-default' },
             _react2.default.createElement(
-              "div",
-              { className: "navbar-header" },
+              'div',
+              { className: 'navbar-header' },
               _react2.default.createElement(
-                "a",
-                { className: "navbar-brand", href: "#" },
-                "Vote8"
+                'a',
+                { className: 'navbar-brand', href: '#' },
+                'Vote8'
               )
             ),
             _react2.default.createElement(
-              "ul",
-              { className: "nav navbar-nav" },
+              'ul',
+              { className: 'nav navbar-nav' },
               _react2.default.createElement(
-                "li",
+                'li',
                 null,
                 _react2.default.createElement(
-                  "a",
-                  { href: "#" },
-                  "Login"
+                  _reactRouterDom.Link,
+                  { to: '/getRandom' },
+                  'Login'
                 )
               )
             )
@@ -161,7 +163,7 @@ var Header = exports.Header = function (_Component) {
 
 exports.default = Header;
 
-},{"react":543}],4:[function(require,module,exports){
+},{"react":543,"react-router-dom":504}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1161,6 +1163,7 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
       title: "the prettiest, dare?",
       options: [{ id: 9, name: "Uemura Rina" }, { id: 12, name: "Kojima Mako" }, { id: 10, name: "Murayama Yuiri" }]
     };
+    //let objc = {};
     _this.state = {
       obj: objc
     };
@@ -1168,8 +1171,27 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
   }
 
   _createClass(RandomPoll, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('http://localhost:8000/getRandom').then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        var bjc = responseJson;
+        console.log("FETCHRANDMPOL :", JSON.stringify(bjc));
+        _this2.setState({
+          obj: bjc
+        });
+        //return responseJson;
+      }).catch(function (error) {
+        console.error(error);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log("RENDERING RANDOMPOLL");
       return _react2.default.createElement(
         'div',
         null,
