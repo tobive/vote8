@@ -24,9 +24,22 @@ module.exports.getRandom = function(callback) {
         callback(result);
         db.close();
       });
-    })
-    callback;
-  })
+    });
+  });
+}
+
+module.exports.getLatest = function(callback) {
+  mongoose.connect('mongodb:' + URL + DB_NAME);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function() {
+    console.log("db connected");
+    Poll.find({}).sort({date: -1}).limit(10).exec(function(err, result) {
+      if(err) console.error("getLatest err: ", err);
+      callback(result);
+      db.close();
+    });
+  });
 }
 
 module.exports.save = function(obj, callback) {
@@ -48,8 +61,27 @@ module.exports.save = function(obj, callback) {
       let promise = newPoll.save(function (err) {
         if(err) return console.error(err);
         db.close();
-      })
+      });
     });
     callback();
+  });
+}
+
+module.exports.votepoll = function(obj, callback) {
+  mongoose.connect('mongodb:' + URL + DB_NAME);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  db.once('open', function() {
+    console.log("db connected");
+    Poll.findOneAndUpdate(
+    { _id: obj._id, 'options.name': obj.name },
+    { $inc: { 'options.$.tally': 1 }},
+    { new: true},
+    function(err, res) {
+      if(err) console.error("ERROR KAMPRET ", err);
+      console.log("TALLY HO: ", res.options[0].tally);
+      callback(err);
+      db.close();
+    });
   });
 }

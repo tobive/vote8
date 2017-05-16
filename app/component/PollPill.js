@@ -6,10 +6,10 @@ function PollPill (props) {
       <a className="btn btn-default"
         onClick={
           (e) => {e.stopPropagation();
-          props.goToPoll(props.IdPoll)}
+          props.goToPoll(props.linkPoll)}
         }
         >
-        Who is the prettiest among goddess
+        {props.title}
       </a>
     </div>
   );

@@ -16,8 +16,8 @@ export class PollFormController extends Component {
     postObj.date = new Date();
     console.log("received state: ",JSON.stringify(postObj));
 
-    var req = new XMLHttpRequest();
-    req.open('POST', 'http://localhost:8000/postnew');
+    let req = new XMLHttpRequest();
+    req.open('POST', 'http://localhost:8000/api/postnew');
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     req.send(JSON.stringify(postObj));
   }

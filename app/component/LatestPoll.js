@@ -2,16 +2,37 @@ import React, {Component} from 'react';
 import PollPill from './PollPill';
 
 export class LatestPoll extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      arrPoll: []
+    };
+  }
+
+  componentDidMount() {
+      fetch('http://localhost:8000/api/getLatest')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));
+          this.setState({
+            arrPoll: responseJson
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }
+
   render() {
-    var arr = [1,2,3,4,5,6,7,8,9,10,11,12];
-    var xxx = this.props.goToPoll;
+    let arr = this.state.arrPoll;
+    let xxx = this.props.goToPoll;
     return(
       <div>
         <div className="late_poll_container text-left">
           <h3><b>Latest Poll</b></h3>
           <div className="late_poll">
-            {arr.map(function(x){
-              return <PollPill key={x} IdPoll={x} goToPoll={xxx} />;
+            {arr.map(function(poll){
+              return <PollPill key={poll._id} IdPoll={poll._id} title={poll.title} goToPoll={xxx} linkPoll={poll.link}/>;
             })}
           </div>
         </div>

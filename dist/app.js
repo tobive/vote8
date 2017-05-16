@@ -391,16 +391,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var LatestPoll = exports.LatestPoll = function (_Component) {
   _inherits(LatestPoll, _Component);
 
-  function LatestPoll() {
+  function LatestPoll(props) {
     _classCallCheck(this, LatestPoll);
 
-    return _possibleConstructorReturn(this, (LatestPoll.__proto__ || Object.getPrototypeOf(LatestPoll)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (LatestPoll.__proto__ || Object.getPrototypeOf(LatestPoll)).call(this, props));
+
+    _this.state = {
+      arrPoll: []
+    };
+    return _this;
   }
 
   _createClass(LatestPoll, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('http://localhost:8000/api/getLatest').then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));
+        _this2.setState({
+          arrPoll: responseJson
+        });
+      }).catch(function (error) {
+        console.error(error);
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+      var arr = this.state.arrPoll;
       var xxx = this.props.goToPoll;
       return _react2.default.createElement(
         'div',
@@ -420,8 +441,8 @@ var LatestPoll = exports.LatestPoll = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'late_poll' },
-            arr.map(function (x) {
-              return _react2.default.createElement(_PollPill2.default, { key: x, IdPoll: x, goToPoll: xxx });
+            arr.map(function (poll) {
+              return _react2.default.createElement(_PollPill2.default, { key: poll._id, IdPoll: poll._id, title: poll.title, goToPoll: xxx, linkPoll: poll.link });
             })
           )
         )
@@ -922,7 +943,6 @@ var PollForm = exports.PollForm = function (_Component) {
       var _this2 = this;
 
       var objPoll = this.props.poll;
-      var savedPoll = 5;
       return _react2.default.createElement(
         'section',
         null,
@@ -1009,11 +1029,11 @@ var PollForm = exports.PollForm = function (_Component) {
 }(_react.Component);
 
 PollForm.defaultProps = {
-  header: "olelelel",
+  header: "",
   poll: {
-    title: "siapakah",
-    description: "ore ore",
-    options: [{ id: 3, name: "Uemura Rina" }, { id: 2, name: "Kojima Mako" }, { id: 6, name: "Murayama Yuiri" }]
+    title: "",
+    description: "",
+    options: []
   }
 };
 
@@ -1071,7 +1091,7 @@ var PollFormController = exports.PollFormController = function (_Component) {
       console.log("received state: ", JSON.stringify(postObj));
 
       var req = new XMLHttpRequest();
-      req.open('POST', 'http://localhost:8000/postnew');
+      req.open('POST', 'http://localhost:8000/api/postnew');
       req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       req.send(JSON.stringify(postObj));
     }
@@ -1112,10 +1132,10 @@ function PollPill(props) {
       { className: "btn btn-default",
         onClick: function onClick(e) {
           e.stopPropagation();
-          props.goToPoll(props.IdPoll);
+          props.goToPoll(props.linkPoll);
         }
       },
-      "Who is the prettiest among goddess"
+      props.title
     )
   );
 }
@@ -1159,11 +1179,10 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
     var _this = _possibleConstructorReturn(this, (RandomPoll.__proto__ || Object.getPrototypeOf(RandomPoll)).call(this, props));
 
     var objc = {
-      _id: 10,
-      title: "the prettiest, dare?",
-      options: [{ id: 9, name: "Uemura Rina" }, { id: 12, name: "Kojima Mako" }, { id: 10, name: "Murayama Yuiri" }]
+      _id: 0,
+      title: "",
+      options: [{ id: 0, name: "" }]
     };
-    //let objc = {};
     _this.state = {
       obj: objc
     };
@@ -1175,15 +1194,13 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      fetch('http://localhost:8000/getRandom').then(function (response) {
+      fetch('http://localhost:8000/api/getRandom').then(function (response) {
         return response.json();
       }).then(function (responseJson) {
-        var bjc = responseJson;
-        console.log("FETCHRANDMPOL :", JSON.stringify(bjc));
+        console.log("FETCHRANDMPOL :", JSON.stringify(responseJson));
         _this2.setState({
-          obj: bjc
+          obj: responseJson
         });
-        //return responseJson;
       }).catch(function (error) {
         console.error(error);
       });
@@ -1191,7 +1208,6 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("RENDERING RANDOMPOLL");
       return _react2.default.createElement(
         'div',
         null,
@@ -1203,7 +1219,7 @@ var RandomPoll = exports.RandomPoll = function (_Component) {
             null,
             'Random Poll'
           ),
-          _react2.default.createElement(_Vote2.default, { obj: this.state.obj, submitVote: this.props.submitVote }),
+          _react2.default.createElement(_Vote2.default, { obj: this.state.obj }),
           _react2.default.createElement(
             'div',
             null,
@@ -1468,6 +1484,19 @@ var Vote = exports.Vote = function (_Component) {
       });
     }
   }, {
+    key: "submitVote",
+    value: function submitVote(ballot) {
+      var obj = {
+        _id: this.props.obj._id,
+        name: ballot
+      };
+      var req = new XMLHttpRequest();
+      req.open('POST', 'http://localhost:8000/api/postvote');
+      req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      req.send(JSON.stringify(obj));
+      console.log("FROM SUBMIT VOTE " + JSON.stringify(obj));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -1479,7 +1508,11 @@ var Vote = exports.Vote = function (_Component) {
         _react2.default.createElement(
           "div",
           null,
-          obj.title
+          _react2.default.createElement(
+            "b",
+            null,
+            obj.title
+          )
         ),
         _react2.default.createElement(
           "div",
@@ -1496,8 +1529,8 @@ var Vote = exports.Vote = function (_Component) {
             {
               type: "button", className: "btn btn-sm btn-success",
               onClick: function onClick(e) {
-                e.stopPropagation();
-                _this2.props.submitVote(_this2.state.ballot);
+                //e.stopPropagation();
+                _this2.submitVote(_this2.state.ballot);
               } },
             "Vote!"
           )

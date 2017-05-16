@@ -10,18 +10,31 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '/cygwin64/home/Riyuyu/vote8/dist', 'index.html'));
 });
 
-app.get('/getRandom', function (req, res) {
+app.get('/api/getRandom', function (req, res) {
   database.getRandom(function(obj) {
     if(!obj) console.log("Data empty");
-    console.log("FROM SERVER JS: ", obj);
+    //console.log("FROM SERVER JS: ", obj);
+    res.json(obj);
+  });
+});
+
+app.get('/api/getLatest', function (req, res) {
+  database.getLatest(function(obj) {
+    if(!obj) console.log("Data Empty");
+    //console.log("GETLATEST: ", obj);
     res.json(obj);
   });
 });
 
 app.use(bodyParser.json());
-app.post('/postnew', function (req, res) {
-  console.log("from server.js: " + JSON.stringify(req.body));
-  database.save(req.body, () => console.log("SAVED"));
+app.post('/api/postnew', function (req, res) {
+  console.log("from server.js: POSTNEW " + JSON.stringify(req.body));
+  database.save(req.body, () => console.log("SAVED NEW POLL"));
+});
+
+app.post('/api/postvote', function (req, res) {
+  console.log("from server.js: POSTVOTE " + JSON.stringify(req.body));
+  database.votepoll(req.body, () => console.log("VOTED!"));
 });
 
 app.listen(PORT, function () {

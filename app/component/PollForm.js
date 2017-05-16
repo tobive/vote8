@@ -31,7 +31,6 @@ export class PollForm extends Component {
 
   render() {
     var objPoll = this.props.poll;
-    var savedPoll = 5;
     return(
       <section>
         <div className="input_box container text-center">
@@ -85,14 +84,11 @@ export class PollForm extends Component {
 }
 
 PollForm.defaultProps = {
-  header: "olelelel",
+  header: "",
   poll: {
-    title: "siapakah",
-    description: "ore ore",
-    options: [{id: 3,name: "Uemura Rina"},
-              {id: 2,name: "Kojima Mako"},
-              {id: 6,name: "Murayama Yuiri"}
-             ]
+    title: "",
+    description: "",
+    options: []
   }
 }
 

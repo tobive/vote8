@@ -6,31 +6,25 @@ export class RandomPoll extends Component {
   constructor(props) {
     super(props);
     var objc = {
-      _id: 10,
-      title: "the prettiest, dare?",
+      _id: 0,
+      title: "",
       options: [
-        {id: 9, name: "Uemura Rina"},
-        {id: 12, name: "Kojima Mako"},
-        {id: 10, name: "Murayama Yuiri"}
+        {id: 0, name: ""}
       ]
     };
-    //let objc = {};
     this.state = {
       obj: objc
     };
   }
 
-
   componentDidMount() {
-    fetch('http://localhost:8000/getRandom')
+    fetch('http://localhost:8000/api/getRandom')
       .then((response) => response.json())
       .then((responseJson) => {
-        let bjc = responseJson;
-        console.log("FETCHRANDMPOL :", JSON.stringify(bjc));
+        console.log("FETCHRANDMPOL :", JSON.stringify(responseJson));
         this.setState({
-          obj : bjc
+          obj : responseJson
         });
-        //return responseJson;
       })
       .catch((error) => {
         console.error(error);
@@ -38,12 +32,11 @@ export class RandomPoll extends Component {
   }
 
   render() {
-    console.log("RENDERING RANDOMPOLL");
     return(
       <div>
         <div className="rand_poll_container">
           <h4>Random Poll</h4>
-          <Vote obj={this.state.obj} submitVote={this.props.submitVote}/>
+          <Vote obj={this.state.obj}/>
           <div>
             <Link to={{pathname: '/vote', state: this.state.obj}}>View Result</Link>
           </div>
