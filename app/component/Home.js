@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MainContainer from './MainContainer';
 import HomeContent from './HomeContent';
+import {Link} from 'react-router-dom';
 
 export class Home extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export class Home extends Component {
 
   goToPoll(idPoll) {
     console.log("open ",idPoll);
+    
   }
 
   render() {

@@ -42,6 +42,21 @@ module.exports.getLatest = function(callback) {
   });
 }
 
+module.exports.getLink = function(link, callback) {
+  mongoose.connect('mongodb:' + URL + DB_NAME);
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function() {
+    console.log("db connected");
+    Poll.find({ 'link': link }, function(err, res) {
+      if(err) console.error("DB GET LINK ERR: ", err);
+      console.log("ISI LINK ", JSON.stringify(res[0]));
+      callback(res[0], db.close());
+      //db.close();
+    });
+  });
+}
+
 module.exports.save = function(obj, callback) {
   mongoose.connect('mongodb:' + URL + DB_NAME);
   var db = mongoose.connection;

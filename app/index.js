@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Main from './component/Main';
 import CreatePoll from './component/CreatePoll';
 import Home from './component/Home';
-import VotePage from './component/VotePage';
+import ShowPoll from './component/ShowPoll';
 //import './index.css';
 
 const home = () => (
@@ -33,7 +33,7 @@ window.onload = () => {
         <Switch>
           <Route exact path='/' component={Home}/>
           <Route path='/create' component={CreatePoll}/>
-          <Route path='/vote' component={VotePage}/>
+          <Route path='/vote' component={ShowPoll}/>
         </Switch>
       </Main>
     </BrowserRouter>),

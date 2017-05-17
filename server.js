@@ -26,6 +26,18 @@ app.get('/api/getLatest', function (req, res) {
   });
 });
 
+app.get('/poll/:id', function (req, res) {
+  database.getLink(req.params.id, function(obj, callback) {
+    if(!obj) {
+      res.status(404);
+      callback;      
+    }
+    console.log("SENDING OBJ :", JSON.stringify(obj));
+    callback;
+    res.json(obj);
+  });
+});
+
 app.use(bodyParser.json());
 app.post('/api/postnew', function (req, res) {
   console.log("from server.js: POSTNEW " + JSON.stringify(req.body));
