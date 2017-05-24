@@ -85,6 +85,7 @@ module.exports.save = function(obj, callback) {
 module.exports.votepoll = function(obj, callback) {
   mongoose.connect('mongodb:' + URL + DB_NAME);
   var db = mongoose.connection;
+  db.setMaxListeners(0);
   db.on('error', console.error.bind(console, 'MongoDB connection error:'));
   db.once('open', function() {
     console.log("db connected");

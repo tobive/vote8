@@ -84,7 +84,7 @@ function Footer() {
 exports.default = Footer;
 
 },{"react":541}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -93,11 +93,9 @@ exports.Header = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = require('react-router-dom');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -117,37 +115,33 @@ var Header = exports.Header = function (_Component) {
   }
 
   _createClass(Header, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'section',
+        "section",
         null,
         _react2.default.createElement(
-          'div',
-          { className: 'header' },
+          "div",
+          { className: "header" },
           _react2.default.createElement(
-            'nav',
-            { className: 'navbar navbar-default' },
+            "nav",
+            { className: "navbar navbar-default" },
             _react2.default.createElement(
-              'div',
-              { className: 'navbar-header' },
+              "div",
+              { className: "navbar-header" },
               _react2.default.createElement(
-                'a',
-                { className: 'navbar-brand', href: '#' },
-                'Vote8'
+                "a",
+                { className: "navbar-brand", href: "#" },
+                "Vote8"
               )
             ),
             _react2.default.createElement(
-              'ul',
-              { className: 'nav navbar-nav' },
+              "ul",
+              { className: "nav navbar-nav" },
               _react2.default.createElement(
-                'li',
+                "li",
                 null,
-                _react2.default.createElement(
-                  _reactRouterDom.Link,
-                  { to: '/getRandom' },
-                  'Login'
-                )
+                "Login"
               )
             )
           )
@@ -163,7 +157,7 @@ var Header = exports.Header = function (_Component) {
 
 exports.default = Header;
 
-},{"react":541,"react-router-dom":502}],4:[function(require,module,exports){
+},{"react":541}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1545,7 +1539,7 @@ var vote = function vote() {
 
 window.onload = function () {
   var root = document.createElement('div');
-  root.id = 'react-root';
+  root.id = 'root';
   document.body.appendChild(root);
 
   (0, _reactDom.render)(_react2.default.createElement(

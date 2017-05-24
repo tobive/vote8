@@ -30,7 +30,6 @@ function compile(watch) {
           if(rec.id[0] === '/' && !rec.id.startsWith(__dirname)) {
             return { id: path.join(__dirname, rec.id.substr(1)) }
           }
-
           return {};
         }]
       })
@@ -51,9 +50,38 @@ function compile(watch) {
     bundler = watchify(bundler)
       .on('update', bundle);
   }
+  return bundle();
+}
+
+function compileServer() {
+  var bundlerServe = browserify('server/server-app.js', {
+    extensions: ['js', 'jsx', 'json'],
+    standalone: 'react-obj'
+  });
+
+  function bundle() {
+    return bundlerServe
+      .plugin(pathmodify, {
+        mods: [function(rec) {
+          if(rec.id[0] === '/' && !rec.id.startsWith(__dirname)) {
+            return { id: path.join(__dirname, rec.id.substr(1)) }
+          }
+          return {};
+        }]
+      })
+      .transform('babelify', { presets: ['es2015', 'react']})
+      .bundle()
+      .pipe(source('server-app.js'))
+      .pipe(buffer())
+      .pipe(gulp.dest('server/lib/'));
+  }
 
   return bundle();
 }
+
+gulp.task('build:server', function() {
+  return compileServer();
+});
 
 gulp.task('build:js', function() {
   return compile();

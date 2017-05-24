@@ -24,7 +24,7 @@ const vote = () => (
 
 window.onload = () => {
   var root = document.createElement('div');
-  root.id = 'react-root';
+  root.id = 'root';
   document.body.appendChild(root);
 
   render(
