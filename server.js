@@ -20,9 +20,9 @@ function renderFullPage(html) {
   `
 }
 
-app.use(express.static(path.resolve(__dirname, '/cygwin64/home/Riyuyu/vote8/dist')));
+app.use(express.static(path.resolve(__dirname, '/home/tobive/Project/vote8/dist')));
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '/cygwin64/home/Riyuyu/vote8/dist', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '/home/tobive/Project/vote8/dist', 'index.html'));
 });
 
 app.get('/api/getRandom', function (req, res) {

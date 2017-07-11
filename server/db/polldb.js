@@ -6,7 +6,10 @@ var pollSchema = mongoose.Schema({
   description: String,
   options: [{
     name: String,
-    tally: Number
+    tally: {
+      type: Number,
+      default: 0
+    }
   }],
   date: Date,
   link: String
