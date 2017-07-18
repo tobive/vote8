@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var userSchema = mongoose.Schema({
-  username: String,
-  password: String,
-  poll_list: []
+var userSchema = new Schema({
+  id: String,
+  email: String,
+  name: String
 });
 
 var User = mongoose.model('User', userSchema);

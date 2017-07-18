@@ -108,15 +108,40 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Header = exports.Header = function (_Component) {
   _inherits(Header, _Component);
 
-  function Header() {
+  function Header(props) {
     _classCallCheck(this, Header);
 
-    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+
+    console.log("IT'S HEADER, BOY");
+    return _this;
   }
 
   _createClass(Header, [{
+    key: "loginButton",
+    value: function loginButton() {
+      return _react2.default.createElement(
+        "a",
+        { className: "navbar-brand", href: "/auth/twitter" },
+        "Login Twitter"
+      );
+    }
+  }, {
+    key: "logoutButton",
+    value: function logoutButton() {
+      return _react2.default.createElement(
+        "a",
+        { className: "navbar-brand", href: "/logout" },
+        "Logout"
+      );
+    }
+  }, {
     key: "render",
     value: function render() {
+      var login = this.loginButton();
+      if (false) {
+        login = this.logoutButton();
+      }
       return _react2.default.createElement(
         "section",
         null,
@@ -131,18 +156,14 @@ var Header = exports.Header = function (_Component) {
               { className: "navbar-header" },
               _react2.default.createElement(
                 "a",
-                { className: "navbar-brand", href: "#" },
+                { className: "navbar-brand", href: "/" },
                 "Vote8"
               )
             ),
             _react2.default.createElement(
               "ul",
               { className: "nav navbar-nav" },
-              _react2.default.createElement(
-                "li",
-                null,
-                "Login"
-              )
+              login
             )
           )
         )
