@@ -10,23 +10,24 @@ var api = require('./server/routes/api-routes');
 const PORT = process.env.PORT || 8000;
 const xxx = require('./server/lib/server-app.js');
 
-// function renderFullPage(html) {
-//   return `
-//     <!doctype html>
-//     <html>
-//       <head>
-//         <title>Vote8</title>
-//       </head>
-//       <body>
-//         <div id="root">${html}</div>
-//       </body>
-//     </html>
-//   `
-// }
+import ReactEngine from 'react-engine';
+import routes from './app/routes.jsx';
+var engine = ReactEngine.server.create({
+  routes: routes,
+  routesFilePath: path.join(__dirname, '/app/routes.jsx'),
+  performanceCollector: function(stats) {
+    console.log(stats);
+  }
+});
+app.engine('.jsx', engine);
+app.set('views', path.join(__dirname, '/app/component'));
+app.set('view engine', 'jsx');
+app.set('view', ReactEngine.expressView);
 
+//connecting db
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/test8')
+mongoose.connect('mongodb://localhost/test8', {useMongoClient: true})
   .then(() => console.log('connection with db successfull'))
   .catch((err) => console.error(err));
 
@@ -66,11 +67,15 @@ passport.deserializeUser(function(id, done) {
   });
 })
 
-app.use(express.static(path.resolve(__dirname, '/home/tobive/Project/vote8/dist')));
+app.use(express.static(path.join(__dirname, '/app')));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '/home/tobive/Project/vote8/dist', 'index.html'));
+app.use('/api', api); //routes for api request
+
+app.get('*', (req, res) => {
+  res.render(req.url, {
+    pack: "man"
+  });
 });
 
 app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['include_email=true']}));
@@ -79,8 +84,6 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));
-
-app.use('/api', api); //routes for api request
 
 app.get('/poll/:id', function (req, res) {
   database.getLink(req.params.id, function(obj, callback) {

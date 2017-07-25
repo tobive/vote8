@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Vote from './Vote';
-import {Link} from 'react-router-dom';
+import Vote from './Vote.jsx';
+import {Link} from 'react-router';
 
 export class RandomPoll extends Component {
   constructor(props) {

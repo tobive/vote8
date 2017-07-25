@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import OptionFormAdd from './OptionFormAdd';
-import MainContainer from './MainContainer';
+import OptionFormAdd from './OptionFormAdd.jsx';
+import MainContainer from './MainContainer.jsx';
 
 export class PollForm extends Component {
   constructor(props) {

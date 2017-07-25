@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import HomeCreatePoll from './HomeCreatePoll';
-import RandomPoll from './RandomPoll';
-import LatestPoll from './LatestPoll';
+import HomeCreatePoll from './HomeCreatePoll.jsx';
+import RandomPoll from './RandomPoll.jsx';
+import LatestPoll from './LatestPoll.jsx';
 
 export class HomeContent extends Component {
   render() {

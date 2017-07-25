@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ShowPoll from './ShowPoll';
+import ShowPoll from './ShowPoll.jsx';
 
 export class ShowPollHandler extends Component {
     constructor(props) {

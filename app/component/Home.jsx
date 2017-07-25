@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import MainContainer from './MainContainer';
-import HomeContent from './HomeContent';
-import {Link} from 'react-router-dom';
+import MainContainer from './MainContainer.jsx';
+import HomeContent from './HomeContent.jsx';
+//import {Link} from 'react-router-dom';
 
 export class Home extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ export class Home extends Component {
     this.state = {
       page: 0
     };
+    console.log("HEY THERE ", this.props.pack);
     // this.changePage = this.changePage.bind(this);
   }
 
@@ -24,7 +25,7 @@ export class Home extends Component {
 
   goToPoll(idPoll) {
     console.log("open ",idPoll);
-    
+
   }
 
   render() {

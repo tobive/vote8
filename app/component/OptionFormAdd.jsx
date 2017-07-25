@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import OptionForm from './OptionForm';
+import OptionForm from './OptionForm.jsx';
 
 export class OptionFormAdd extends Component {
   constructor(props) {

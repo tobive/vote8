@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PollFormController from './PollFormController';
+import PollFormController from './PollFormController.jsx';
 
 //------------------------------index.js-----------------------
 export class CreatePoll extends Component {

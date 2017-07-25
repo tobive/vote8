@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PollPill from './PollPill';
+import PollPill from './PollPill.jsx';
 
 export class LatestPoll extends Component {
   constructor(props) {

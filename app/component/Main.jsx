@@ -1,10 +1,10 @@
-/* eslint-disable */
 import React, {Component} from 'react';
-import MainContainer from './MainContainer';
+import MainContainer from './MainContainer.jsx';
 
 //------------------------------index.js-----------------------
 export class Main extends Component {
   render() {
+    console.log("YOO, ",this.props.pack);
     return (
       <MainContainer>
         {this.props.children}

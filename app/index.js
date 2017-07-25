@@ -1,41 +1,28 @@
-import 'babel-polyfill';
-import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import Main from './component/Main';
-import CreatePoll from './component/CreatePoll';
-import Home from './component/Home';
-import ShowPoll from './component/ShowPoll';
-//import './index.css';
+/*-------------------------------------------------------------------------------------------------------------------*\
+|  Copyright (C) 2017 PayPal                                                                                           |
+|                                                                                                                     |
+|  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance     |
+|  with the License.                                                                                                  |
+|                                                                                                                     |
+|  You may obtain a copy of the License at                                                                            |
+|                                                                                                                     |
+|       http://www.apache.org/licenses/LICENSE-2.0                                                                    |
+|                                                                                                                     |
+|  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed   |
+|  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for  |
+|  the specific language governing permissions and limitations under the License.                                     |
+\*-------------------------------------------------------------------------------------------------------------------*/
 
-const home = () => (
-  <div>
-  <div>Home</div>
-  <div><Link to='/create'>Create</Link></div>
-  <div><Link to='/vote'>Vote</Link></div>
-  </div>
-)
-const create = () => (
-  <div>Create oi</div>
-)
-const vote = () => (
-  <div>Vote oi</div>
-)
+var Routes = require('./routes.jsx')
+var ReactEngineClient = require('react-engine/lib/client');
 
-window.onload = () => {
-  var root = document.createElement('div');
-  root.id = 'root';
-  document.body.appendChild(root);
-
-  render(
-    (<BrowserRouter>
-      <Main>
-        <Switch>
-          <Route exact path='/' component={Home}/>
-          <Route path='/create' component={CreatePoll}/>
-          <Route path='/vote' component={ShowPoll}/>
-        </Switch>
-      </Main>
-    </BrowserRouter>),
-  root);
+var options = {
+  routes: Routes,
+  viewResolver: function(viewName) {
+    return require('./component/' + viewName);
+  }
 };
+
+document.addEventListener('DOMContentLoaded', function onLoad() {
+  ReactEngineClient.boot(options);
+});

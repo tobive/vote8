@@ -3,7 +3,8 @@ import React, {Component} from 'react';
 export class Header extends Component {
   constructor(props) {
     super(props);
-    console.log("HEADER SESSION : ");
+    var test = 'paramXXX';
+    console.log("HEADER SESSION : ", this.props.pack);
   }
 
   loginButton() {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PollForm from './PollForm';
+import PollForm from './PollForm.jsx';
 
 export class PollFormController extends Component {
   savePollX(obj) {

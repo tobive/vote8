@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Vote from './Vote';
-import PollChart from './PollChart';
+import Vote from './Vote.jsx';
+import PollChart from './PollChart.jsx';
 
 export class ShowPoll extends Component {
     constructor(props) {
