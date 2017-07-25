@@ -35,7 +35,7 @@ mongoose.connect('mongodb://localhost/test8', {useMongoClient: true})
 passport.use(new TwitterStrategy({
   consumerKey: 'PYa4lrVGc4c6RFPKfphtUV39W',
   consumerSecret: 'wJzykGLMsfPSAkjNflrw1JAYrY7kMgknqYLeD9xdAKO4WnKqTY',
-  callbackURL: 'http://127.0.0.1:3000/auth/twitter/callback',
+  callbackURL: 'http://localhost:8000/auth/twitter/callback',
   includeEmail: true
 }, function(token, tokenSecret, profile, done) {
   console.log("CROOT");
@@ -72,11 +72,14 @@ app.use(bodyParser.json());
 
 app.use('/api', api); //routes for api request
 
-app.get('*', (req, res) => {
-  res.render(req.url, {
-    pack: "man"
-  });
-});
+//app.use for passport
+app.use(require('express-session')({
+  secret: 'uemura rina',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['include_email=true']}));
 
@@ -95,6 +98,14 @@ app.get('/poll/:id', function (req, res) {
     callback;
     res.json(obj);
   });
+});
+
+app.get('*', (req, res) => {
+  let obj = { pack: "man"};
+  if(req.user) {
+    obj = { pack: req.user.name };
+  }
+  res.render(req.url, obj);
 });
 
 app.listen(PORT, function () {
