@@ -10,6 +10,7 @@ var api = require('./server/routes/api-routes');
 const PORT = process.env.PORT || 8000;
 const xxx = require('./server/lib/server-app.js');
 
+//react-engine configuration
 import ReactEngine from 'react-engine';
 import routes from './app/routes.jsx';
 var engine = ReactEngine.server.create({
@@ -70,8 +71,6 @@ passport.deserializeUser(function(id, done) {
 app.use(express.static(path.join(__dirname, '/app')));
 app.use(bodyParser.json());
 
-app.use('/api', api); //routes for api request
-
 //app.use for passport
 app.use(require('express-session')({
   secret: 'uemura rina',
@@ -84,9 +83,29 @@ app.use(passport.session());
 app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['include_email=true']}));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-  successRedirect: '/',
-  failureRedirect: '/login'
+  successRedirect: '/dashboard',
+  failureRedirect: '/'
 }));
+
+function loggedIn(req, res, next) {
+  if(req.user) {
+    next();
+  } else {
+    res.redirect('/signin');
+  }
+}
+
+//routes for api request
+app.use('/api', api);
+
+app.get('/dashboard', loggedIn, function(req, res) {
+  res.render(req.url, {user: req.user});
+})
+
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+})
 
 app.get('/poll/:id', function (req, res) {
   database.getLink(req.params.id, function(obj, callback) {
@@ -101,10 +120,7 @@ app.get('/poll/:id', function (req, res) {
 });
 
 app.get('*', (req, res) => {
-  let obj = { pack: "man"};
-  if(req.user) {
-    obj = { pack: req.user.name };
-  }
+  let obj = { user: req.user };
   res.render(req.url, obj);
 });
 

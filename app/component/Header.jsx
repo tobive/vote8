@@ -4,7 +4,7 @@ export class Header extends Component {
   constructor(props) {
     super(props);
     var test = 'paramXXX';
-    console.log("HEADER SESSION : ", this.props.pack);
+    console.log("HEADER SESSION : ", this.props.user);
   }
 
   loginButton() {
@@ -15,17 +15,21 @@ export class Header extends Component {
     );
   }
 
-  logoutButton() {
+  logoutButton(props) {
     return (
-      <a className="navbar-brand" href="/logout">
-        Logout
-      </a>
+      <div>
+        Welcome, {props}!
+        <a className="navbar-brand" href="/logout">
+          Logout
+        </a>
+      </div>
+
     );
   }
 
   render() {
     let login = this.loginButton();
-    if (false) { login = this.logoutButton(); }
+    if (this.props.user) { login = this.logoutButton(this.props.user.name); }
     return (
       <section>
         <div className="header">

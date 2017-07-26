@@ -13,7 +13,6 @@ export class PollFormController extends Component {
       arrOpt.push(objTmp);
     }
     postObj.options = arrOpt;
-    postObj.date = new Date();
     console.log("received state: ",JSON.stringify(postObj));
 
     let req = new XMLHttpRequest();

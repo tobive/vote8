@@ -4,9 +4,9 @@ import MainContainer from './MainContainer.jsx';
 //------------------------------index.js-----------------------
 export class Main extends Component {
   render() {
-    console.log("YOO, ",this.props.pack);
+    console.log("YOO, ",this.props.user);
     return (
-      <MainContainer>
+      <MainContainer user={this.props.user}>
         {this.props.children}
       </MainContainer>
     );
