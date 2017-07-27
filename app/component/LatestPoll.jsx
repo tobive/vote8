@@ -10,17 +10,17 @@ export class LatestPoll extends Component {
   }
 
   componentDidMount() {
-      fetch('http://localhost:8000/api/getLatest')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));
-          this.setState({
-            arrPoll: responseJson
-          });
-        })
-        .catch((error) => {
-          console.error(error);
+    fetch('http://localhost:8000/api/getLatest')
+      .then((res) => res.json())
+      .then((resJson) => {
+        //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));
+        this.setState({
+          arrPoll: resJson
         });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {

@@ -99,7 +99,10 @@ function loggedIn(req, res, next) {
 app.use('/api', api);
 
 app.get('/dashboard', loggedIn, function(req, res) {
-  res.render(req.url, {user: req.user});
+  database.getFromUser(req.user._id, function(obj) {
+    if(!obj) console.log("Data Empty");
+    res.render(req.url, {user: req.user, obj: obj});
+  });
 })
 
 app.get('/logout', function(req, res) {

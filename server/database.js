@@ -30,9 +30,16 @@ module.exports.getLatest = function(callback) {
   });
 }
 
+module.exports.getFromUser = function(id, callback) {
+  Poll.find({userid: id}).sort({date: -1}).exec(function(err, result) {
+    if(err) console.error("getFromUser Err: ", err);
+    callback(result);
+  });
+}
+
 module.exports.getLink = function(link, callback) {
-  mongoose.connect('mongodb:' + URL + DB_NAME);
-  var db = mongoose.connection;
+  // mongoose.connect('mongodb:' + URL + DB_NAME);
+  // var db = mongoose.connection;
   // db.on('error', console.error.bind(console, 'connection error:'));
   // db.once('open', function() {
   //   console.log("db connected");
