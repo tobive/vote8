@@ -9614,7 +9614,7 @@ function VoteLabel(props) {
     _react2.default.createElement(
       "label",
       null,
-      _react2.default.createElement("input", { type: "radio", name: "ballot", value: props.name, key: props.name }),
+      _react2.default.createElement("input", { type: "radio", name: "ballot", value: props._id, key: props._id }),
       props.name
     )
   );
@@ -9648,7 +9648,7 @@ var Vote = exports.Vote = function (_Component) {
     value: function submitVote(ballot) {
       var obj = {
         _id: this.props.obj._id,
-        name: ballot
+        key: ballot
       };
       var req = new XMLHttpRequest();
       req.open('POST', 'http://localhost:8000/api/postvote');
@@ -9676,9 +9676,9 @@ var Vote = exports.Vote = function (_Component) {
         ),
         _react2.default.createElement(
           "div",
-          { key: obj._id, id: obj._id, onChange: this.selectedValue.bind(this) },
+          { onChange: this.selectedValue.bind(this) },
           obj.options.map(function (opt) {
-            return _react2.default.createElement(VoteLabel, { name: opt.name, key: opt.name });
+            return _react2.default.createElement(VoteLabel, { name: opt.name, _id: opt._id });
           })
         ),
         _react2.default.createElement(
@@ -9782,7 +9782,7 @@ var ShowPoll = exports.ShowPoll = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (ShowPoll.__proto__ || Object.getPrototypeOf(ShowPoll)).call(this, props));
 
-    var objPoll = props.poll;
+    var objPoll = _this.props.pollServer;
     _this.state = {
       idPoll: objPoll._id,
       idBallot: null,
@@ -9812,7 +9812,7 @@ var ShowPoll = exports.ShowPoll = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var poll = this.props.poll;
+      var poll = this.props.pollServer;
       return _react2.default.createElement(
         'section',
         null,
@@ -9825,9 +9825,7 @@ var ShowPoll = exports.ShowPoll = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'poll_box text-center' },
-              _react2.default.createElement(_Vote2.default, {
-                obj: this.props.poll
-              })
+              _react2.default.createElement(_Vote2.default, { obj: this.props.pollServer })
             )
           ),
           _react2.default.createElement(
@@ -15231,36 +15229,12 @@ var Dashboard = exports.Dashboard = function (_Component) {
     return _this;
   }
 
-  // componentDidMount() {
-  //   fetch('http://localhost:8000/api/getFromUser')
-  //     .then((response) => {
-  //       console.log("ISI RESPONSE: ", response);
-  //       response.json().then(function(data) {
-  //         console.log("SI DATA: ", data);
-  //       });
-  //     })
-  //     .then((resJson) => {
-  //       console.log("ISI resJson: ,", JSON.stringify(resJson));
-  //       // this.setState({
-  //       //   arrPoll: resJson
-  //       // }, ()=> console.log("PUT JAMPUT"));
-  //     })
-  //     .catch((err) => {
-  //       console.log("ERROR TAEK");
-  //       console.log(err);
-  //     });
-  // }
-
   _createClass(Dashboard, [{
     key: 'render',
     value: function render() {
       var name = this.props.user ? this.props.user.name : "";
       var id = this.props.user ? this.props.user._id : "";
       var arr = this.props.obj ? this.props.obj : [];
-      arr.forEach(function (v) {
-        delete v.options;
-      });
-      console.log("ISI ARR: ,", arr);
       return _react2.default.createElement(
         'div',
         null,
@@ -32195,6 +32169,7 @@ module.exports = _react2.default.createElement(
       _reactRouter.Route,
       { component: _Main2.default },
       _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+      _react2.default.createElement(_reactRouter.Route, { path: '/poll', component: _ShowPoll2.default }),
       _react2.default.createElement(_reactRouter.Route, { path: '/dashboard', component: _Dashboard2.default }),
       _react2.default.createElement(_reactRouter.Route, { path: '/create', component: _CreatePoll2.default }),
       _react2.default.createElement(_reactRouter.Route, { path: '/vote', component: _ShowPoll2.default }),

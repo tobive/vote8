@@ -10,26 +10,6 @@ export class Dashboard extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   fetch('http://localhost:8000/api/getFromUser')
-  //     .then((response) => {
-  //       console.log("ISI RESPONSE: ", response);
-  //       response.json().then(function(data) {
-  //         console.log("SI DATA: ", data);
-  //       });
-  //     })
-  //     .then((resJson) => {
-  //       console.log("ISI resJson: ,", JSON.stringify(resJson));
-  //       // this.setState({
-  //       //   arrPoll: resJson
-  //       // }, ()=> console.log("PUT JAMPUT"));
-  //     })
-  //     .catch((err) => {
-  //       console.log("ERROR TAEK");
-  //       console.log(err);
-  //     });
-  // }
-
   render() {
     let name = this.props.user ? this.props.user.name : "";
     let id = this.props.user ? this.props.user._id : "";

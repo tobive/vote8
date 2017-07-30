@@ -37,23 +37,10 @@ module.exports.getFromUser = function(id, callback) {
   });
 }
 
-module.exports.getLink = function(link, callback) {
-  // mongoose.connect('mongodb:' + URL + DB_NAME);
-  // var db = mongoose.connection;
-  // db.on('error', console.error.bind(console, 'connection error:'));
-  // db.once('open', function() {
-  //   console.log("db connected");
-  //   Poll.find({ 'link': link }, function(err, res) {
-  //     if(err) console.error("DB GET LINK ERR: ", err);
-  //     console.log("ISI LINK ", JSON.stringify(res[0]));
-  //     callback(res[0], db.close());
-  //     //db.close();
-  //   });
-  // });
-  Poll.find({ 'link': link }, function(err, res) {
-    if(err) console.error("DB GET LINK ERR: ", err);
-    console.log("ISI LINK ", JSON.stringify(res[0]));
-    callback(res[0], db.close());
+module.exports.getLink = function(linkID, callback) {
+  Poll.find({link: linkID}).exec(function(err, result) {
+    if(err) console.error("getLink err: ", err);
+    callback(result);
   });
 }
 
@@ -78,7 +65,7 @@ module.exports.save = function(obj, callback) {
 
 module.exports.votepoll = function(obj, callback) {
   Poll.findOneAndUpdate(
-  { _id: obj._id, 'options.name': obj.name },
+  { _id: obj._id, 'options._id': obj.key },
   { $inc: { 'options.$.tally': 1 }},
   { new: true},
   function(err, res) {

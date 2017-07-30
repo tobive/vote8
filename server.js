@@ -110,15 +110,14 @@ app.get('/logout', function(req, res) {
   res.redirect('/');
 })
 
-app.get('/poll/:id', function (req, res) {
-  database.getLink(req.params.id, function(obj, callback) {
+app.get('/vote/:id', function (req, res) {
+  database.getLink(req.params.id, function(obj) {
     if(!obj) {
-      res.status(404);
-      callback;
+      res.render('/Error404');
+    } else {
+      console.log("SENDING OBJ :", JSON.stringify(obj));
+      res.render('/poll', {pollServer: obj[0]});
     }
-    console.log("SENDING OBJ :", JSON.stringify(obj));
-    callback;
-    res.json(obj);
   });
 });
 

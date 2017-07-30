@@ -16,6 +16,7 @@ module.exports = (
     <Route path='/' component={Layout}>
       <Route component={Main}>
         <IndexRoute component={Home}/>
+        <Route path='/poll' component={ShowPoll}/>
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/create' component={CreatePoll}/>
         <Route path='/vote' component={ShowPoll}/>

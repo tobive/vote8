@@ -5,7 +5,7 @@ import PollChart from './PollChart.jsx';
 export class ShowPoll extends Component {
     constructor(props) {
         super(props);
-        const objPoll = props.poll;
+        const objPoll = this.props.pollServer;
         this.state = {
           idPoll: objPoll._id,
           idBallot: null,
@@ -29,15 +29,13 @@ export class ShowPoll extends Component {
     }
 
     render() {
-        var poll = this.props.poll;
+        var poll = this.props.pollServer;
         return(
           <section>
             <div className="row">
               <div className="show_left col-sm-6">
                 <div className="poll_box text-center">
-                  <Vote
-                    obj = {this.props.poll}
-                    />
+                  <Vote obj = {this.props.pollServer}/>
                 </div>
               </div>
               <div className="show_right col-sm-6">

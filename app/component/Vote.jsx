@@ -4,7 +4,7 @@ function VoteLabel (props) {
   return(
     <div className="radio">
       <label>
-        <input type="radio" name="ballot" value={props.name} key={props.name} />
+        <input type="radio" name="ballot" value={props._id} key={props._id} />
         {props.name}
       </label>
     </div>
@@ -30,7 +30,7 @@ export class Vote extends Component {
     submitVote(ballot) {
       let obj = {
         _id: this.props.obj._id,
-        name: ballot
+        key: ballot
       };
       let req = new XMLHttpRequest();
       req.open('POST', 'http://localhost:8000/api/postvote');
@@ -46,9 +46,9 @@ export class Vote extends Component {
             <div>
               <b>{obj.title}</b>
             </div>
-            <div key={obj._id} id={obj._id} onChange={this.selectedValue.bind(this)}>
+            <div onChange={this.selectedValue.bind(this)}>
               {obj.options.map(function(opt){
-                  return <VoteLabel name={opt.name} key={opt.name}/>
+                  return <VoteLabel name={opt.name} _id={opt._id}/>
                 })
               }
             </div>
