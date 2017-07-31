@@ -112,18 +112,46 @@ app.get('/logout', function(req, res) {
 
 app.get('/vote/:id', function (req, res) {
   database.getLink(req.params.id, function(obj) {
-    if(!obj) {
-      res.render('/Error404');
+    let objSend = {};
+    objSend.user = req.user ? req.user : null;
+    if(!obj[0]) {
+      res.render('/error404', objSend);
     } else {
+      objSend.pollServer = obj[0];
       console.log("SENDING OBJ :", JSON.stringify(obj));
-      res.render('/poll', {pollServer: obj[0]});
+      res.render(req.url, objSend);
     }
   });
 });
 
+app.get('/', (req, res) => {
+  let obj = {};
+  if(req.user) {
+    obj.user = req.user;
+    database.getFromUser(req.user._id, function(data) {
+      if(data) obj.obj = data;
+      console.log("\n\nJANCUK TAEK TAEK TAEK: ", obj, " \n\n");
+      res.render(req.url, obj);
+    });
+  } else {
+    res.render(req.url, obj);
+  }
+  // res.render(req.url, obj)
+});
+
 app.get('*', (req, res) => {
-  let obj = { user: req.user };
-  res.render(req.url, obj);
+  let obj = {user: req.user};
+  // if(req.user) {
+  //   obj.user = req.user;
+  //   database.getFromUser(req.user._id, function(data) {
+  //     if(data) obj.obj = data;
+  //     console.log("\n\nJANCUK TAEK TAEK TAEK: ", obj, " \n\n");
+  //     res.render(req.url, obj);
+  //   });
+  // } else {
+  //   res.render(req.url, obj);
+  // }
+  res.render(req.url, obj)
 });
 
 app.listen(PORT, function () {

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export class Header extends Component {
   constructor(props) {
@@ -18,12 +19,18 @@ export class Header extends Component {
   logoutButton(props) {
     return (
       <div>
-        Welcome, {props}!
-        <a className="navbar-brand" href="/logout">
-          Logout
-        </a>
+        <ul className="nav navbar-nav">
+          Welcome, {props}!
+          <a className="navbar-brand" href="/logout">
+            Logout
+          </a>
+        </ul>
+        <ul className="nav navbar-nav">
+          <Link className="navbar-brand" to="/dashboard">
+            Dashboard
+          </Link>
+        </ul>
       </div>
-
     );
   }
 
@@ -35,11 +42,9 @@ export class Header extends Component {
         <div className="header">
           <nav className="navbar navbar-default">
             <div className="navbar-header">
-              <a className="navbar-brand" href="/">Vote8</a>
+              <Link className="navbar-brand" to="/">Vote8</Link>
             </div>
-            <ul className="nav navbar-nav">
-              {login}
-            </ul>
+            {login}
           </nav>
         </div>
       </section>

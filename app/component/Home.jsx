@@ -32,7 +32,7 @@ export class Home extends Component {
     return(
         <HomeContent
           submitVote={this.castVote}
-          // createPoll={this.changePage}
+          createPoll={this.changePage}
           goToPoll={this.goToPoll}
         />
     );

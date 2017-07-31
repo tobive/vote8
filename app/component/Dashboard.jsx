@@ -6,14 +6,21 @@ export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrPoll: []
+      arrPoll: this.props.obj ? this.props.obj : []
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("MELBU KENEK GAK SIIIOIIIHHHH\n");
+    this.setState({
+      arrPoll: this.props.obj ? this.props.obj : []
+    }, ()=> console.log("WILL RECEIVE PROPS: ",this.state.arrPoll));
   }
 
   render() {
     let name = this.props.user ? this.props.user.name : "";
     let id = this.props.user ? this.props.user._id : "";
-    let arr = this.props.obj ? this.props.obj : [];
+    let arr = this.state.arrPoll;
     return(
       <div>
         <div>

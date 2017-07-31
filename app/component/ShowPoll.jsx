@@ -15,7 +15,7 @@ export class ShowPoll extends Component {
     }
 
     submitVote(ballot) {
-        console.log("from ShowPoll :",ballot);
+        // console.log("from ShowPoll :",ballot);
         this.setState({
           idBallot: ballot,
           resultPoll: this.props.resultPoll
@@ -29,6 +29,7 @@ export class ShowPoll extends Component {
     }
 
     render() {
+        // console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
         var poll = this.props.pollServer;
         return(
           <section>
@@ -40,8 +41,7 @@ export class ShowPoll extends Component {
               </div>
               <div className="show_right col-sm-6">
                 <div className="poll_chart text-center">
-                  <canvas id="pollChart" width="400" height="400"></canvas>
-                  <PollChart poll={this.state.resultPoll} />
+                  <PollChart options={poll.options} />
                 </div>
               </div>
             </div>

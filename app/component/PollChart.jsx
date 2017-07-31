@@ -1,49 +1,36 @@
 import React, {Component} from 'react';
-var PieChart = require('react-chartjs').Bar;
+import { PieChart, Pie, Legend, Tooltip } from 'recharts';
 
 export class PollChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            poll: props.poll
+            options: props.options
         }
     }
 
     render() {
-        console.log("BANGSAT", this.props.poll);
-        const dataPoll = this.props.poll;
-        if (!dataPoll) return (<div>Failed to Load</div>); //fail-safe
-        let valuePoll = dataPoll.map(x => Object.values(x)[0]);
-        let labelsPoll = dataPoll.map(x => Object.values(x)[1]);
-        const chartData = {
-            labels: labelsPoll,
-            datasets: [{
-                label: "# of Votes",
-                data: valuePoll,
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1
-            }]
-        };
-        const chartOptions = {
-            scales: {
-                yAxes: [{
-                  ticks: {
-                    beginAtZero: true
-                  }
-                }]
-            }
-        };
+        let data = [];
+        if(this.state.options) {
+          let tmp = this.state.options;
+          for(let i=0; i<tmp.length; i++) {
+            let objtmp = {
+              name: tmp[i].name,
+              value: tmp[i].tally
+            };
+            data.push(objtmp);
+          }
+        }
+        console.log("ISI DATA SKRG ADALAH: ", data);
         return(
-            <PieChart data={chartData} options={chartOptions} width="300" height="250" />
+            <PieChart width={800} height={400}>
+              <Pie data={data} cx={200} cy={200}
+                innerRadius={40} outerRadius={90} fill="#ECB588"
+                nameKey="name" legendType="rect"
+                animationBegin={1000}
+                label/>
+              <Tooltip/>
+            </PieChart>
         );
     }
 

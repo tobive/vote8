@@ -11,7 +11,10 @@ router.post('/postnew', function (req, res) {
 
 router.post('/postvote', function (req, res) {
   console.log("from server.js: POSTVOTE " + JSON.stringify(req.body));
-  database.votepoll(req.body, () => console.log("VOTED!"));
+  database.votepoll(req.body, () => {
+    console.log("VOTED!");
+    res.sendStatus(200);
+  });
 });
 
 router.get('/getRandom', function (req, res) {

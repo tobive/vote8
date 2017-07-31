@@ -16,11 +16,12 @@ module.exports = (
     <Route path='/' component={Layout}>
       <Route component={Main}>
         <IndexRoute component={Home}/>
-        <Route path='/poll' component={ShowPoll}/>
+        <Route path='/vote/*' component={ShowPoll}/>
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/create' component={CreatePoll}/>
         <Route path='/vote' component={ShowPoll}/>
         <Route path='/signin' component={Signin}/>
+        <Route path='/error404' component={Error404}/>
         <Route path='*' component={Error404}/>
       </Route>
     </Route>
