@@ -22,10 +22,12 @@ export class PollFormController extends Component {
   }
 
   render() {
+    let empty = {};
     return(
       <PollForm
         header={this.props.header}
         savePoll={this.savePollX}
+        options={empty}
         />
     );
   }

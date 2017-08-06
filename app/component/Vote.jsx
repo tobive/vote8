@@ -4,7 +4,7 @@ function VoteLabel (props) {
   return(
     <div className="radio">
       <label>
-        <input type="radio" name="ballot" value={props._id} key={props._id} />
+        <input key={props._id} type="radio" name="ballot" value={props._id} />
         {props.name}
       </label>
     </div>
@@ -46,9 +46,12 @@ export class Vote extends Component {
             <div>
               <b>{obj.title}</b>
             </div>
+            <div>
+              {obj.description}
+            </div>
             <div onChange={this.selectedValue.bind(this)}>
               {obj.options.map(function(opt){
-                  return <VoteLabel name={opt.name} _id={opt._id}/>
+                  return <VoteLabel key={opt._id} name={opt.name} _id={opt._id}/>
                 })
               }
             </div>

@@ -7,7 +7,9 @@ export class MainContainer extends Component {
     return (
       <div className="main">
         <Header user={this.props.user} />
+        <div>
         {this.props.children}
+        </div>
         <Footer />
       </div>
     );

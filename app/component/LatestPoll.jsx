@@ -32,7 +32,7 @@ export class LatestPoll extends Component {
           <h3><b>Latest Poll</b></h3>
           <div className="late_poll">
             {arr.map(function(poll){
-              return <PollPill key={poll._id} IdPoll={poll._id} title={poll.title} goToPoll={xxx} linkPoll={poll.link}/>;
+              return <PollPill key={poll._id} objPoll={poll}/>;
             })}
           </div>
         </div>

@@ -59,8 +59,8 @@ module.exports.save = function(obj, callback) {
       if(err) return console.error(err);
       //db.close();
     });
+    callback();
   });
-  callback();
 }
 
 module.exports.votepoll = function(obj, callback) {
@@ -74,4 +74,18 @@ module.exports.votepoll = function(obj, callback) {
     callback(err);
     //db.close();
   });
+}
+
+module.exports.findUserId = function(id, callback) {
+  Poll.find({_id: id}).exec(function(err, result) {
+    if(err) return err;
+    callback(result);
+  });
+}
+
+module.exports.deletePoll = function(id, callback) {
+  Poll.remove({_id: id}, function(err) {
+    if(err) console.error(err);
+    callback();
+  })
 }

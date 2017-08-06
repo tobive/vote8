@@ -5,32 +5,43 @@ import MainContainer from './MainContainer.jsx';
 export class PollForm extends Component {
   constructor(props) {
     super(props);
+    let title = props.poll.title ? props.poll.title : "";
+    let description = props.poll.description ? props.poll.description : "";
     this.state = {
-      title: props.poll.title,
-      description: props.poll.description,
-      options: {}
+      title: title,
+      description: description,
+      // options: props.poll.options,
+      poll: props.poll ? props.poll : {}
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.titleChangeHandler = this.titleChangeHandler.bind(this);
+    this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
     this.optionsChangeHandler = this.optionsChangeHandler.bind(this);
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const id = target.id;
-    const value = target.value;
+  titleChangeHandler(event) {
+    let newTitle = event.target.value;
     this.setState({
-      [id] : value
+      title: newTitle
+    });
+  }
+
+  descriptionChangeHandler(event) {
+    let newDesc = event.target.value;
+    this.setState({
+      description: newDesc
     });
   }
 
   optionsChangeHandler(obj) {
+    //console.log("from ECOECOECO :", obj);
     this.setState({
       options: obj
     });
   }
 
   render() {
-    var objPoll = this.props.poll;
+    var objPoll = this.state.poll.options;
+    console.log("INI ISI STATE.options: ", objPoll);
     return(
       <section>
         <div className="input_box container text-center">
@@ -41,11 +52,8 @@ export class PollForm extends Component {
               <div className="col-sm-10">
                 <input type="text" className="form-control" id="title"
                   placeholder="put the question here"
-                  value={
-                          this.state["title"] ?
-                            this.state["title"] : objPoll.title
-                        }
-                  onChange={this.handleInputChange}
+                  value={this.state.title}
+                  onChange={this.titleChangeHandler}
                   />
               </div>
               <label className="col-sm-2 control-label">description</label>
@@ -53,17 +61,14 @@ export class PollForm extends Component {
                 <textarea className="form-control" rows="3"
                   placeholder="< optional >"
                   id="description"
-                  value={
-                    this.state["description"] ?
-                      this.state["description"] : objPoll.description
-                  }
-                  onChange={this.handleInputChange}
+                  value={this.state.description}
+                  onChange={this.descriptionChangeHandler}
                   />
               </div>
               <div className="col-sm-12"><br/></div>
               <label className="col-sm-2 control-label">options</label>
               <OptionFormAdd
-                options={objPoll.options}
+                options={this.state.poll.options}
                 onChange={this.optionsChangeHandler}
                 />
             </div>

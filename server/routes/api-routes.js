@@ -33,6 +33,27 @@ router.get('/getLatest', function (req, res) {
   });
 });
 
+router.post('/postEdited', function (req, res) {
+  console.log("from " + req.user._id + " from server.js: POSTEDITED " + JSON.stringify(req.body));
+  if(req.user) {
+    database.findUserId(req.body.pollId, (result) => {
+      if(req.user._id == result[0].userid) {//check if poll is owned by user
+        req.body.editedObj.userid = req.user._id;
+        req.body.editedObj.date = new Date();
+        database.deletePoll(req.body.pollId, () => console.log("SUCCESS DELETING ", req.body.pollId));
+        database.save(req.body.editedObj, () => {
+          console.log("SUCCESS EDITED POLL");          
+          res.render('/dashboard');
+        });
+      } else {
+        res.sendStatus(401);
+      }
+    });
+  } else {
+    res.sendStatus(401);
+  }
+})
+
 // router.get('/getFromUser', function (req, res) {
 //   if(req.user) {
 //     database.getFromUser(req.user._id, function(obj) {

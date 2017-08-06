@@ -7,36 +7,34 @@ export class ShowPoll extends Component {
         super(props);
         const objPoll = this.props.pollServer;
         this.state = {
-          idPoll: objPoll._id,
-          idBallot: null,
-          resultPoll: props.resultPoll
+          poll: objPoll
         };
-        this.submitVote = this.submitVote.bind(this);
+        //this.submitVote = this.submitVote.bind(this);
     }
 
     submitVote(ballot) {
         // console.log("from ShowPoll :",ballot);
-        this.setState({
-          idBallot: ballot,
-          resultPoll: this.props.resultPoll
-        }, ()=> {
-          const objBallot = {
-            idPoll: this.state.idPoll,
-            idBallot: this.state.idBallot
-          }
-          this.props.sendBallot(objBallot);
-        });
+        // this.setState({
+        //   idBallot: ballot,
+        //   resultPoll: this.props.resultPoll
+        // }, ()=> {
+        //   const objBallot = {
+        //     idPoll: this.state.idPoll,
+        //     idBallot: this.state.idBallot
+        //   }
+        //   this.props.sendBallot(objBallot);
+        // });
     }
 
     render() {
-        // console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
-        var poll = this.props.pollServer;
+        console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
+        let poll = this.state.poll;
         return(
           <section>
             <div className="row">
               <div className="show_left col-sm-6">
                 <div className="poll_box text-center">
-                  <Vote obj = {this.props.pollServer}/>
+                  <Vote obj = {poll}/>
                 </div>
               </div>
               <div className="show_right col-sm-6">

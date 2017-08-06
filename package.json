@@ -29,6 +29,7 @@
     "passport-twitter": "^1.0.4",
     "pathmodify": "^0.5.0",
     "react": "^15.5.4",
+    "react-bootstrap": "^0.31.1",
     "react-chartjs": "^0.8.0",
     "react-dom": "^15.5.4",
     "react-engine": "^4.3.0",

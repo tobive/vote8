@@ -5,13 +5,16 @@ export class OptionFormAdd extends Component {
   constructor(props) {
     super(props);
     var arrOpt = props.options;
-    var temp = arrOpt.map((opt,i) => {
-      return opt.id;
+    var tempId = arrOpt.map((opt) => {
+      return opt._id;
+    });
+    var tempName = arrOpt.map((opt) => {
+      return opt.name;
     });
     this.state = {
-      idCount: temp.length + 1,
-      arrOptionForm: temp,
-      options: {}
+      idCount: tempId.length + 1,
+      arrOptionForm: tempId,
+      options: tempName
     };
     this.addOption = this.addOption.bind(this);
     this.deleteOption = this.deleteOption.bind(this);
@@ -57,11 +60,11 @@ export class OptionFormAdd extends Component {
   }
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const id = target.id;
+    console.log("start handleInputChange: ", event.target.value);
+    const value = event.target.value;
+    const _id = event.target.id;
     const optionNew = this.state.options;
-    optionNew[id] = value;
+    optionNew[_id] = value;
     this.setState({
       options : optionNew
     }, () => this.props.onChange(this.state.options));
@@ -71,7 +74,7 @@ export class OptionFormAdd extends Component {
     const arrOptions = this.props.options;
     const objOptions = {};
     for(let i=0;i<arrOptions.length;i++){
-      objOptions[arrOptions[i].id] = arrOptions[i].name;
+      objOptions[arrOptions[i]._id] = arrOptions[i].name;
     }
     this.setState({
       options: objOptions

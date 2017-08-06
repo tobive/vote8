@@ -2,27 +2,17 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 
 function PollPill (props) {
-  // function goToVoteLink (link) {
-  //   let req = new XMLHttpRequest();
-  //   req.open('GET', 'http://localhost:8000/vote/' + link);
-  // };
-  let link = "/vote/" + props.linkPoll;
+  let link = "/vote/" + props.objPoll.link;
+  let newTo = {
+    pathname: link
+  };
   return(
     <div className="btn-group btn-group-justified">
-      <Link className="btn btn-default" to={link}>
-        {props.title}
+      <Link className="btn btn-default" to={newTo}>
+        {props.objPoll.title}
       </Link>
     </div>
   );
 }
 
 export default PollPill;
-
-// <a className="btn btn-default"
-//   onClick={
-//     (e) => {e.stopPropagation();
-//     props.goToPoll(props.linkPoll)}
-//   }
-//   >
-//   {props.title}
-// </a>

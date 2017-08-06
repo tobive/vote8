@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import PollPill from './PollPill.jsx';
+import {ListGroup, ListGroupItem} from 'react-bootstrap';
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -10,11 +11,20 @@ export class Dashboard extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log("MELBU KENEK GAK SIIIOIIIHHHH\n");
-    this.setState({
-      arrPoll: this.props.obj ? this.props.obj : []
-    }, ()=> console.log("WILL RECEIVE PROPS: ",this.state.arrPoll));
+  renderListGroup(polls) {
+    return (
+      <ListGroup>
+        {polls.map((poll)=>{
+          let date = new Date(poll.date);
+          let link = "http://localhost:8000/edit/" + poll.link;
+          return(
+            <ListGroupItem header={poll.title} href={link}>
+              {date.toString().substring(0,24)}
+            </ListGroupItem>
+          );
+        })}
+      </ListGroup>
+    );
   }
 
   render() {
@@ -32,17 +42,18 @@ export class Dashboard extends Component {
           </Link>
         </div>
         <div className="late_poll_container">
-          <h3><b>Latest Poll</b></h3>
-          <div className="late_poll">
-            {arr.map(function(poll){
-              return <PollPill key={poll._id} IdPoll={poll._id} title={poll.title} linkPoll={poll.link}/>;
-            })}
-          </div>
+          <h3><b>Manage Your Polls</b></h3>
+          {this.renderListGroup(arr)}
         </div>
-
       </div>
     );
   }
 }
 
 export default Dashboard;
+
+// <div className="late_poll">
+//   {arr.map(function(poll){
+//     return <PollPill key={poll._id} objPoll={poll}/>;
+//   })}
+// </div>

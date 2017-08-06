@@ -9,6 +9,7 @@ import ShowPoll from './component/ShowPoll.jsx';
 import Layout from './component/Layout.jsx';
 import Dashboard from './component/Dashboard.jsx';
 import Signin from './component/Signin.jsx';
+import EditPoll from './component/EditPoll.jsx';
 import Error404 from './component/Error404.jsx';
 
 module.exports = (
@@ -16,10 +17,10 @@ module.exports = (
     <Route path='/' component={Layout}>
       <Route component={Main}>
         <IndexRoute component={Home}/>
-        <Route path='/vote/*' component={ShowPoll}/>
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/create' component={CreatePoll}/>
-        <Route path='/vote' component={ShowPoll}/>
+        <Route path='/vote/*' component={ShowPoll}/>
+        <Route path='/edit/*' component={EditPoll}/>
         <Route path='/signin' component={Signin}/>
         <Route path='/error404' component={Error404}/>
         <Route path='*' component={Error404}/>

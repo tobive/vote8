@@ -32,13 +32,14 @@ export class RandomPoll extends Component {
   }
 
   render() {
+    let link = "/vote/" + this.state.obj._id;
     return(
       <div>
         <div className="rand_poll_container">
           <h4>Random Poll</h4>
           <Vote obj={this.state.obj}/>
           <div>
-            <Link to={{pathname: '/vote', state: this.state.obj}}>View Result</Link>
+            <Link to={link}>View Result</Link>
           </div>
         </div>
       </div>

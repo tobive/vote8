@@ -118,7 +118,21 @@ app.get('/vote/:id', function (req, res) {
       res.render('/error404', objSend);
     } else {
       objSend.pollServer = obj[0];
-      console.log("SENDING OBJ :", JSON.stringify(obj));
+      console.log("SENDING VOTE/ :", JSON.stringify(obj));
+      res.render(req.url, objSend);
+    }
+  });
+});
+
+app.get('/edit/:id', function (req, res) {
+  database.getLink(req.params.id, function(obj) {
+    let objSend = {};
+    objSend.user = req.user ? req.user : null;
+    if(!obj[0]) {
+      res.render('/error404', objSend);
+    } else {
+      objSend.pollServer = obj[0];
+      console.log("SENDING /EDIT :", JSON.stringify(obj));
       res.render(req.url, objSend);
     }
   });
@@ -130,28 +144,17 @@ app.get('/', (req, res) => {
     obj.user = req.user;
     database.getFromUser(req.user._id, function(data) {
       if(data) obj.obj = data;
-      console.log("\n\nJANCUK TAEK TAEK TAEK: ", obj, " \n\n");
       res.render(req.url, obj);
     });
   } else {
     res.render(req.url, obj);
   }
-  // res.render(req.url, obj)
 });
 
 app.get('*', (req, res) => {
   let obj = {user: req.user};
-  // if(req.user) {
-  //   obj.user = req.user;
-  //   database.getFromUser(req.user._id, function(data) {
-  //     if(data) obj.obj = data;
-  //     console.log("\n\nJANCUK TAEK TAEK TAEK: ", obj, " \n\n");
-  //     res.render(req.url, obj);
-  //   });
-  // } else {
-  //   res.render(req.url, obj);
-  // }
-  res.render(req.url, obj)
+  res.render(req.url, obj);
+
 });
 
 app.listen(PORT, function () {
