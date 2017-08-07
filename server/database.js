@@ -50,13 +50,13 @@ module.exports.save = function(obj, callback) {
   { $inc: { sequence: 1 }},
   {new: true},
   function(err, count) {
-    if(err) console.error("ERROR TAEK: ", err);
+    if(err) callback(err);
     console.log("BANGSAT " + count.sequence)
     let val = parseInt(count.sequence);
     obj.link = hashids.encode(val);
     let newPoll = new Poll(obj);
     let promise = newPoll.save(function (err) {
-      if(err) return console.error(err);
+      if(err) callback(err);
       //db.close();
     });
     callback();

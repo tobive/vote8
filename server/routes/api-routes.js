@@ -6,7 +6,11 @@ router.post('/postnew', function (req, res) {
   console.log("from " + req.user + " from server.js: POSTNEW " + JSON.stringify(req.body));
   req.body.userid = req.user ? req.user._id : 1;
   req.body.date = new Date();
-  database.save(req.body, () => console.log("SAVED NEW POLL"));
+  database.save(req.body, (err) => {
+    if(err) res.sendStatus(401);
+    console.log("SAVED NEW POLL");
+    res.sendStatus(200);
+  });
 });
 
 router.post('/postvote', function (req, res) {
@@ -42,15 +46,32 @@ router.post('/postEdited', function (req, res) {
         req.body.editedObj.date = new Date();
         database.deletePoll(req.body.pollId, () => console.log("SUCCESS DELETING ", req.body.pollId));
         database.save(req.body.editedObj, () => {
-          console.log("SUCCESS EDITED POLL");          
-          res.render('/dashboard');
+          console.log("SUCCESS EDITED POLL");
+          res.sendStatus(200);
         });
       } else {
-        res.sendStatus(401);
+        res.sendStatus(403);
       }
     });
   } else {
-    res.sendStatus(401);
+    res.sendStatus(403);
+  }
+})
+
+router.post('/deletePoll', function (req, res) {
+  if(req.user) {
+    database.findUserId(req.body.pollId, (result) => {
+      if(req.user._id == result[0].userid) {
+        database.deletePoll(req.body.pollId, () => console.log("SUCCESS DELETING ", req.body.pollId));
+        res.sendStatus(200);
+      } else {
+        console.log("\n\nERROR DI SINI\n\n");
+        res.sendStatus(403);
+      }
+    });
+  } else {
+    console.log("\n\nERROR DI SANA\n\n");
+    res.sendStatus(403);
   }
 })
 

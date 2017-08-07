@@ -32,7 +32,7 @@ export class RandomPoll extends Component {
   }
 
   render() {
-    let link = "/vote/" + this.state.obj._id;
+    let link = "/vote/" + this.state.obj.link;
     return(
       <div>
         <div className="rand_poll_container">

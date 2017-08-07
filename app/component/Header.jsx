@@ -8,7 +8,6 @@ export class Header extends Component {
     this.state = {
       showModal: false
     }
-
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     console.log("HEADER SESSION : ", this.props.user);
