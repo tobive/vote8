@@ -17,9 +17,14 @@ export class Dashboard extends Component {
         {polls.map((poll)=>{
           let date = new Date(poll.date);
           let link = "http://localhost:8000/edit/" + poll.link;
+          let voteLink = "http://localhost:8000/vote/" + poll.link;
           return(
-            <ListGroupItem header={poll.title} href={link}>
-              {date.toString().substring(0,24)}
+            <ListGroupItem header={poll.title}>
+              <span className="pull-right btn btn-xs btn-danger" href={link}>
+                Edit
+              </span>
+              {date.toString().substring(0,24)}<br/>
+              {voteLink}
             </ListGroupItem>
           );
         })}

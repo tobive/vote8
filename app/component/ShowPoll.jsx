@@ -5,45 +5,45 @@ import PollChart from './PollChart.jsx';
 export class ShowPoll extends Component {
     constructor(props) {
         super(props);
-        const objPoll = this.props.pollServer;
+        const objPoll = Object.assign({}, this.props.pollServer);
         this.state = {
-          poll: objPoll
+          poll: objPoll,
+          active: false
         };
-        //this.submitVote = this.submitVote.bind(this);
     }
 
-    submitVote(ballot) {
-        // console.log("from ShowPoll :",ballot);
-        // this.setState({
-        //   idBallot: ballot,
-        //   resultPoll: this.props.resultPoll
-        // }, ()=> {
-        //   const objBallot = {
-        //     idPoll: this.state.idPoll,
-        //     idBallot: this.state.idBallot
-        //   }
-        //   this.props.sendBallot(objBallot);
-        // });
+    renderChart() {
+      return (
+        <div className="show_right col-sm-6">
+          <div className="poll_chart text-center">
+            <PollChart options={this.state.poll.options} />
+          </div>
+        </div>
+      );
+    }
+
+    componentDidMount() {
+      this.setState({active: true});
     }
 
     render() {
         console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
         let poll = this.state.poll;
+        let chart = "";
+        if(this.state.active) {
+          chart = this.renderChart();
+        }
         return(
-          <section>
+          <div>
             <div className="row">
               <div className="show_left col-sm-6">
                 <div className="poll_box text-center">
-                  <Vote obj = {poll}/>
+                  <Vote obj={poll}/>
                 </div>
               </div>
-              <div className="show_right col-sm-6">
-                <div className="poll_chart text-center">
-                  <PollChart options={poll.options} />
-                </div>
-              </div>
+            {chart}
             </div>
-          </section>
+          </div>
         );
     }
 }

@@ -15416,19 +15416,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function VoteLabel(props) {
-  return _react2.default.createElement(
-    'div',
-    { className: 'radio' },
-    _react2.default.createElement(
-      'label',
-      null,
-      _react2.default.createElement('input', { key: props._id, type: 'radio', name: 'ballot', value: props._id }),
-      props.name
-    )
-  );
-}
-
 var Vote = exports.Vote = function (_Component) {
   _inherits(Vote, _Component);
 
@@ -15562,21 +15549,21 @@ var Vote = exports.Vote = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          null,
+          { className: 'rad-container' },
           obj.options.map(function (opt) {
             return _react2.default.createElement(
               'div',
-              { className: 'radio' },
+              { className: 'radio rad-button' },
               _react2.default.createElement(
                 'label',
                 null,
                 _react2.default.createElement('input', { type: 'radio', key: opt._id, name: 'ballot', value: opt._id,
-                  checked: this.state.ballot === opt._id,
-                  onChange: this.selectedValue.bind(this) }),
+                  checked: _this3.state.ballot === opt._id,
+                  onChange: _this3.selectedValue.bind(_this3) }),
                 opt.name
               )
             );
-          }, this)
+          })
         ),
         _react2.default.createElement(
           'div',
@@ -15599,7 +15586,6 @@ var Vote = exports.Vote = function (_Component) {
 
   return Vote;
 }(_react.Component);
-// <VoteLabel key={opt._id} name={opt.name} _id={opt._id}/>
 
 exports.default = Vote;
 
@@ -15682,36 +15668,43 @@ var ShowPoll = exports.ShowPoll = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (ShowPoll.__proto__ || Object.getPrototypeOf(ShowPoll)).call(this, props));
 
-    var objPoll = _this.props.pollServer;
+    var objPoll = Object.assign({}, _this.props.pollServer);
     _this.state = {
-      poll: objPoll
+      poll: objPoll,
+      active: false
     };
-    //this.submitVote = this.submitVote.bind(this);
     return _this;
   }
 
   _createClass(ShowPoll, [{
-    key: 'submitVote',
-    value: function submitVote(ballot) {
-      // console.log("from ShowPoll :",ballot);
-      // this.setState({
-      //   idBallot: ballot,
-      //   resultPoll: this.props.resultPoll
-      // }, ()=> {
-      //   const objBallot = {
-      //     idPoll: this.state.idPoll,
-      //     idBallot: this.state.idBallot
-      //   }
-      //   this.props.sendBallot(objBallot);
-      // });
+    key: 'renderChart',
+    value: function renderChart() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'show_right col-sm-6' },
+        _react2.default.createElement(
+          'div',
+          { className: 'poll_chart text-center' },
+          _react2.default.createElement(_PollChart2.default, { options: this.state.poll.options })
+        )
+      );
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({ active: true });
     }
   }, {
     key: 'render',
     value: function render() {
       console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
       var poll = this.state.poll;
+      var chart = "";
+      if (this.state.active) {
+        chart = this.renderChart();
+      }
       return _react2.default.createElement(
-        'section',
+        'div',
         null,
         _react2.default.createElement(
           'div',
@@ -15725,15 +15718,7 @@ var ShowPoll = exports.ShowPoll = function (_Component) {
               _react2.default.createElement(_Vote2.default, { obj: poll })
             )
           ),
-          _react2.default.createElement(
-            'div',
-            { className: 'show_right col-sm-6' },
-            _react2.default.createElement(
-              'div',
-              { className: 'poll_chart text-center' },
-              _react2.default.createElement(_PollChart2.default, { options: poll.options })
-            )
-          )
+          chart
         )
       );
     }
@@ -27393,10 +27378,18 @@ var Dashboard = exports.Dashboard = function (_Component) {
         polls.map(function (poll) {
           var date = new Date(poll.date);
           var link = "http://localhost:8000/edit/" + poll.link;
+          var voteLink = "http://localhost:8000/vote/" + poll.link;
           return _react2.default.createElement(
             _reactBootstrap.ListGroupItem,
-            { header: poll.title, href: link },
-            date.toString().substring(0, 24)
+            { header: poll.title },
+            _react2.default.createElement(
+              'span',
+              { className: 'pull-right btn btn-xs btn-danger', href: link },
+              'Edit'
+            ),
+            date.toString().substring(0, 24),
+            _react2.default.createElement('br', null),
+            voteLink
           );
         })
       );

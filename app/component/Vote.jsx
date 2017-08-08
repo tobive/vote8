@@ -93,19 +93,19 @@ export class Vote extends Component {
           <div>
             <div><b>{obj.title}</b></div>
             <div>{obj.description}</div>
-            <div>
-              {obj.options.map(function(opt){
+            <div className="rad-container">
+              {obj.options.map((opt) => {
                   return (
-                    <div className="radio">
+                    <div className="radio rad-button">
                       <label>
-                        <input type="radio" key={opt._id} name="ballot" value={opt._id}
-                          checked={this.state.ballot === opt._id}
-                          onChange={this.selectedValue.bind(this)}/>
+                      <input type="radio" key={opt._id} name="ballot" value={opt._id}
+                        checked={this.state.ballot === opt._id}
+                        onChange={this.selectedValue.bind(this)}/>
                         {opt.name}
                       </label>
                     </div>
                   );
-                }, this)
+                })
               }
             </div>
             <div>

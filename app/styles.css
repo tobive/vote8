@@ -58,6 +58,16 @@ a:hover {
   color: #515151;
 }
 
+.rad-button {
+  text-align: left;
+  display: inline-block;
+}
+
+.rad-container {
+  margin: auto;
+  width: 50%;
+}
+
 .xxx {
   background-color: blue !important;
 }

@@ -124,7 +124,7 @@ app.get('/vote/:id', function (req, res) {
   });
 });
 
-app.get('/edit/:id', function (req, res) {
+app.get('/edit/:id', loggedIn, function (req, res) {
   database.getLink(req.params.id, function(obj) {
     let objSend = {};
     objSend.user = req.user ? req.user : null;
