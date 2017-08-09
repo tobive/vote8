@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+const URL = require('../../config/main.js').MAIN_URL;
 
 function PollPill (props) {
-  let link = "http://localhost:8000/vote/" + props.objPoll.link;
-  let newTo = {
-    pathname: link
-  };
+  let link = URL + "/vote/" + props.objPoll.link;
+
   return(
     <div className="btn-group btn-group-justified">
       <a className="btn btn-default" href={link}>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import PollForm from './PollForm.jsx';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class EditPoll extends Component {
   constructor(props) {
@@ -67,11 +68,7 @@ export class EditPoll extends Component {
     sendObj.editedObj.options = optionsTmp;
     console.log("saveEdited is sendobj: ", sendObj);
 
-    // let req = new XMLHttpRequest();
-    // req.open('POST', 'http://localhost:8000/api/postEdited');
-    // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // req.send(JSON.stringify(sendObj));
-    fetch('http://localhost:8000/api/postEdited', {
+    fetch(URL + '/api/postEdited', {
       method: 'post',
       headers: new Headers({
         'Content-Type' : 'application/json;charset=UTF-8'
@@ -82,11 +79,10 @@ export class EditPoll extends Component {
       .then(res => {
         console.log(res);
         if(res.status == 200) {
-          //window.location = 'http://localhost:8000/';
           this.setState({ showModal: true, success: true });
           setTimeout(function() {
             this.setState({ showModal: false });
-            window.location = 'http://localhost:8000/dashboard';
+            window.location = URL + '/dashboard';
           }.bind(this), 2000);
         } else {
           this.setState({ showModal: true, success: false });
@@ -99,11 +95,7 @@ export class EditPoll extends Component {
     delReq.userId = this.props.user._id;
     delReq.pollId = this.state.id;
 
-    // let req = new XMLHttpRequest();
-    // req.open('POST', 'http://localhost:8000/api/deletePoll');
-    // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // req.send(JSON.stringify(delReq));
-    fetch('http://localhost:8000/api/deletePoll', {
+    fetch(URL + '/api/deletePoll', {
       method: 'post',
       headers: new Headers({
         'Content-Type' : 'application/json;charset=UTF-8'
@@ -114,11 +106,10 @@ export class EditPoll extends Component {
       .then(res => {
         console.log(res);
         if(res.status == 200) {
-          //window.location = 'http://localhost:8000/';
           this.setState({ showModal: true, success: true });
           setTimeout(function() {
             this.setState({ showModal: false });
-            window.location = 'http://localhost:8000/dashboard';
+            window.location = URL + '/dashboard';
           }.bind(this), 2000);
         } else {
           this.setState({ showModal: true, success: false });

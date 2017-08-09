@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import PollForm from './PollForm.jsx';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class CreatePoll extends Component {
   constructor(props) {
@@ -60,11 +61,7 @@ export class CreatePoll extends Component {
     postObj.options = arrOpt;
     console.log("received state: ",JSON.stringify(postObj));
 
-    // let req = new XMLHttpRequest();
-    // req.open('POST', 'http://localhost:8000/api/postnew');
-    // req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    // req.send(JSON.stringify(postObj));
-    fetch('http://localhost:8000/api/postnew', {
+    fetch(URL + '/api/postnew', {
       method: 'post',
       headers: new Headers({
         'Content-Type' : 'application/json;charset=UTF-8'
@@ -75,19 +72,19 @@ export class CreatePoll extends Component {
       .then(res => {
         console.log(res);
         if(res.status == 200) {
-          //window.location = 'http://localhost:8000/';
           this.setState({ showModal: true, success: true });
           setTimeout(function() {
             this.setState({ showModal: false });
-            window.location = 'http://localhost:8000/';
+            window.location = URL;
           }.bind(this), 2000);
         } else {
-          this.setState({ showModal: true, success: false });          
+          this.setState({ showModal: true, success: false });
         }
       });
   }
 
   render() {
+    console.log("ISI GOBLOK GOBLOKAN ", URL);
     let empty = {};
     let modal = this.alertModal(this.state.success);
     return(

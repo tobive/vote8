@@ -18,7 +18,6 @@
     "babel-preset-react": "^6.3.13",
     "babel-register": "^6.3.13",
     "body-parser": "^1.17.1",
-    "chart.js": "^2.6.0",
     "express": "^4.15.2",
     "express-session": "^1.15.4",
     "hashids": "^1.1.1",
@@ -26,11 +25,11 @@
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.8",
     "passport": "^0.3.2",
+    "passport-github": "^1.1.0",
     "passport-twitter": "^1.0.4",
     "pathmodify": "^0.5.0",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.1",
-    "react-chartjs": "^0.8.0",
     "react-dom": "^15.5.4",
     "react-engine": "^4.3.0",
     "react-router": "^2.4.0",
@@ -40,10 +39,6 @@
   "devDependencies": {
     "nodemon": "^1.11.0",
     "react": "^15.5.4",
-    "react-chartjs": "^0.8.0",
-    "react-dom": "^15.5.4",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.9.0"
+    "react-dom": "^15.5.4"
   }
 }

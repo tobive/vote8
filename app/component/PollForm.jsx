@@ -10,7 +10,6 @@ export class PollForm extends Component {
     this.state = {
       title: title,
       description: description,
-      // options: props.poll.options,
       poll: props.poll ? props.poll : {}
     };
     this.titleChangeHandler = this.titleChangeHandler.bind(this);
@@ -33,7 +32,6 @@ export class PollForm extends Component {
   }
 
   optionsChangeHandler(obj) {
-    //console.log("from ECOECOECO :", obj);
     this.setState({
       options: obj
     });

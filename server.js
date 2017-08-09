@@ -3,12 +3,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require('passport');
-var TwitterStrategy = require('passport-twitter').Strategy;
+var Login = require('./server/passportConfig');
 var user = require('./server/db/userdb');
 var database = require('./server/database');
 var api = require('./server/routes/api-routes');
 const PORT = process.env.PORT || 8000;
-const xxx = require('./server/lib/server-app.js');
+const DB = require('./config/main').DATABASE;
 
 //react-engine configuration
 import ReactEngine from 'react-engine';
@@ -28,40 +28,17 @@ app.set('view', ReactEngine.expressView);
 //connecting db
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/test8', {useMongoClient: true})
+mongoose.connect(DB, {useMongoClient: true})
   .then(() => console.log('connection with db successfull'))
   .catch((err) => console.error(err));
 
 //passport configuration
-passport.use(new TwitterStrategy({
-  consumerKey: 'PYa4lrVGc4c6RFPKfphtUV39W',
-  consumerSecret: 'wJzykGLMsfPSAkjNflrw1JAYrY7kMgknqYLeD9xdAKO4WnKqTY',
-  callbackURL: 'http://localhost:8000/auth/twitter/callback',
-  includeEmail: true
-}, function(token, tokenSecret, profile, done) {
-  console.log("CROOT");
-  var me = new user({
-    email: profile.emails[0].value,
-    name: profile.displayName
-  });
-  user.findOne({ email: me.email }, function(err, u) {
-    if(!u) {
-      me.save(function (err, me) {
-        if(err) return done(err);
-        done(null, me)
-      })
-    } else {
-      console.log(u);
-      done(null, u);
-    }
-  })
-}));
-
+passport.use(Login.twitterLogin);
+passport.use(Login.githubLogin);
 passport.serializeUser(function(user, done) {
   console.log(user);
   done(null, user._id);
 });
-
 passport.deserializeUser(function(id, done) {
   user.findById(id, function(err, user) {
     done(err, user);
@@ -81,8 +58,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['include_email=true']}));
-
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {
+  successRedirect: '/dashboard',
+  failureRedirect: '/'
+}));
+app.get('/auth/github', passport.authenticate('github'));
+app.get('/auth/github/callback', passport.authenticate('github', {
   successRedirect: '/dashboard',
   failureRedirect: '/'
 }));

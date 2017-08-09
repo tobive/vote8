@@ -87,20 +87,4 @@ router.get('/getPollByUser', function (req, res) {
   }
 })
 
-// router.get('/getFromUser', function (req, res) {
-//   if(req.user) {
-//     database.getFromUser(req.user._id, function(obj) {
-//       // console.log("INILAH ISI OBJ: ", obj);
-//       if(!obj) console.log("Data Poll Empty");
-//       //let blabla = JSON.stringify(obj);
-//       // res.header("Access-Control-Allow-Origin", "*");
-//       // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//       let objArr = {obj: obj};
-//       res.render(req.url, {obj: ["a","b","c"]});
-//     });
-//   } else {
-//     res.json({});
-//   }
-// });
-
 module.exports = router;

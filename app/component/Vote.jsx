@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class Vote extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ export class Vote extends Component {
         key: ballot
       };
       console.log("FROM SUBMIT VOTE " + JSON.stringify(obj));
-      fetch('http://localhost:8000/api/postvote', {
+      fetch(URL + '/api/postvote', {
         method: 'post',
         headers: new Headers({
           'Content-Type' : 'application/json;charset=UTF-8'

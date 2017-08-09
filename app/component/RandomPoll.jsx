@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Vote from './Vote.jsx';
-import {Link} from 'react-router';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class RandomPoll extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export class RandomPoll extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/getRandom')
+    fetch(URL + '/api/getRandom')
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("FETCHRANDMPOL :", JSON.stringify(responseJson));
@@ -32,14 +32,14 @@ export class RandomPoll extends Component {
   }
 
   render() {
-    let link = "/vote/" + this.state.obj.link;
+    let link = URL + "/vote/" + this.state.obj.link;
     return(
       <div>
         <div className="rand_poll_container">
           <h4>Random Poll</h4>
           <Vote obj={this.state.obj}/>
           <div>
-            <Link to={link}>View Result</Link>
+            <a href={link}>View Result</a>
           </div>
         </div>
       </div>

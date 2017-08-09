@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import PollPill from './PollPill.jsx';
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -16,8 +17,8 @@ export class Dashboard extends Component {
       <ListGroup>
         {polls.map((poll)=>{
           let date = new Date(poll.date);
-          let link = "http://localhost:8000/edit/" + poll.link;
-          let voteLink = "http://localhost:8000/vote/" + poll.link;
+          let link = URL + "/edit/" + poll.link;
+          let voteLink = URL + "/vote/" + poll.link;
           return(
             <ListGroupItem header={poll.title}>
               <a className="pull-right btn btn-xs btn-danger" href={link}>
@@ -34,7 +35,7 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     console.log("AWAWAWAWAWAJIIIIIII");
-    fetch('http://localhost:8000/api/getPollByUser', {
+    fetch(URL + '/api/getPollByUser', {
       method: 'get',
       credentials: 'include'
     })

@@ -31,7 +31,7 @@ export class Header extends Component {
             </a>
           </div>
           <div>
-            <a className="navbar-brand" href="/auth/twitter">
+            <a className="navbar-brand" href="/auth/github">
               Login Github
             </a>
           </div>

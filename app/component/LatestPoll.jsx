@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PollPill from './PollPill.jsx';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class LatestPoll extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export class LatestPoll extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/getLatest')
+    fetch(URL + '/api/getLatest')
       .then((res) => res.json())
       .then((resJson) => {
         //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PollForm from './PollForm.jsx';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class PollFormController extends Component {
   savePollX(obj) {
@@ -16,7 +17,7 @@ export class PollFormController extends Component {
     console.log("received state: ",JSON.stringify(postObj));
 
     let req = new XMLHttpRequest();
-    req.open('POST', 'http://localhost:8000/api/postnew');
+    req.open('POST', URL + '/api/postnew');
     req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     req.send(JSON.stringify(postObj));
   }
