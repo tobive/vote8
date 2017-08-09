@@ -75,6 +75,18 @@ router.post('/deletePoll', function (req, res) {
   }
 })
 
+router.get('/getPollByUser', function (req, res) {
+  if(req.user) {
+    database.getFromUser(req.user._id, function(obj) {
+      if(!obj) console.log("Data Empty");
+      //res.sendStatus(200);
+      res.json(obj);
+    });
+  } else {
+    res.sendStatus(403);
+  }
+})
+
 // router.get('/getFromUser', function (req, res) {
 //   if(req.user) {
 //     database.getFromUser(req.user._id, function(obj) {

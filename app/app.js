@@ -15609,7 +15609,7 @@ var _reactRouter = __webpack_require__(63);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function PollPill(props) {
-  var link = "/vote/" + props.objPoll.link;
+  var link = "http://localhost:8000/vote/" + props.objPoll.link;
   var newTo = {
     pathname: link
   };
@@ -15617,8 +15617,8 @@ function PollPill(props) {
     'div',
     { className: 'btn-group btn-group-justified' },
     _react2.default.createElement(
-      _reactRouter.Link,
-      { className: 'btn btn-default', to: newTo },
+      'a',
+      { className: 'btn btn-default', href: link },
       props.objPoll.title
     )
   );
@@ -22524,7 +22524,7 @@ var OptionFormAdd = exports.OptionFormAdd = function (_Component) {
     value: function handleInputChange(event) {
       var _this2 = this;
 
-      console.log("start handleInputChange: ", event.target.value);
+      //console.log("start handleInputChange: ", event.target.value);
       var value = event.target.value;
       var _id = event.target.id;
       var optionNew = this.state.options;
@@ -22789,9 +22789,9 @@ var HomeContent = exports.HomeContent = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'container-fluid text-center' },
-          _react2.default.createElement(_HomeCreatePoll2.default
-          // createPoll={this.props.createPoll}
-          , null),
+          _react2.default.createElement(_HomeCreatePoll2.default, {
+            createPoll: this.props.createPoll
+          }),
           _react2.default.createElement(
             'div',
             { className: 'row content' },
@@ -27383,7 +27383,7 @@ var Dashboard = exports.Dashboard = function (_Component) {
             _reactBootstrap.ListGroupItem,
             { header: poll.title },
             _react2.default.createElement(
-              'span',
+              'a',
               { className: 'pull-right btn btn-xs btn-danger', href: link },
               'Edit'
             ),
@@ -27393,6 +27393,26 @@ var Dashboard = exports.Dashboard = function (_Component) {
           );
         })
       );
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      console.log("AWAWAWAWAWAJIIIIIII");
+      fetch('http://localhost:8000/api/getPollByUser', {
+        method: 'get',
+        credentials: 'include'
+      }).then(function (res) {
+        return res.json();
+      }).then(function (resJson) {
+        console.log("ISINYA DSAHBOARD HABIS MINTA ", resJson);
+        _this2.setState({
+          arrPoll: resJson
+        });
+      }).catch(function (err) {
+        return console.error(err);
+      });
     }
   }, {
     key: 'render',

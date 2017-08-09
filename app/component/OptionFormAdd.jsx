@@ -60,7 +60,7 @@ export class OptionFormAdd extends Component {
   }
 
   handleInputChange(event) {
-    console.log("start handleInputChange: ", event.target.value);
+    //console.log("start handleInputChange: ", event.target.value);
     const value = event.target.value;
     const _id = event.target.id;
     const optionNew = this.state.options;

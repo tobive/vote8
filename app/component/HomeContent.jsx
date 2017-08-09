@@ -9,7 +9,7 @@ export class HomeContent extends Component {
       <section>
         <div className="container-fluid text-center">
           <HomeCreatePoll
-            // createPoll={this.props.createPoll}
+            createPoll={this.props.createPoll}
             />
           <div className="row content">
             <div className="col-sm-4">

@@ -20,9 +20,9 @@ export class Dashboard extends Component {
           let voteLink = "http://localhost:8000/vote/" + poll.link;
           return(
             <ListGroupItem header={poll.title}>
-              <span className="pull-right btn btn-xs btn-danger" href={link}>
+              <a className="pull-right btn btn-xs btn-danger" href={link}>
                 Edit
-              </span>
+              </a>
               {date.toString().substring(0,24)}<br/>
               {voteLink}
             </ListGroupItem>
@@ -30,6 +30,22 @@ export class Dashboard extends Component {
         })}
       </ListGroup>
     );
+  }
+
+  componentDidMount() {
+    console.log("AWAWAWAWAWAJIIIIIII");
+    fetch('http://localhost:8000/api/getPollByUser', {
+      method: 'get',
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(resJson => {
+        console.log("ISINYA DSAHBOARD HABIS MINTA ", resJson);
+        this.setState({
+          arrPoll: resJson
+        });
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
