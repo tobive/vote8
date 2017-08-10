@@ -7,6 +7,7 @@ var Login = require('./server/passportConfig');
 var user = require('./server/db/userdb');
 var database = require('./server/database');
 var api = require('./server/routes/api-routes');
+var auth = require('./server/routes/auth-routes');
 const PORT = process.env.PORT || 8000;
 const DB = require('./config/main').DATABASE;
 
@@ -56,18 +57,9 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/auth', auth);
 
-app.get('/auth/twitter', passport.authenticate('twitter', { scope: ['include_email=true']}));
-app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/'
-}));
-app.get('/auth/github', passport.authenticate('github'));
-app.get('/auth/github/callback', passport.authenticate('github', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/'
-}));
-
+// login check
 function loggedIn(req, res, next) {
   if(req.user) {
     next();
@@ -78,16 +70,13 @@ function loggedIn(req, res, next) {
 
 //routes for api request
 app.use('/api', api);
-
 app.get('/dashboard', loggedIn, function(req, res) {
   res.render(req.url, {user: req.user});
-})
-
+});
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
-})
-
+});
 app.get('/vote/:id', function (req, res) {
   database.getLink(req.params.id, function(obj) {
     let objSend = {};
@@ -101,7 +90,6 @@ app.get('/vote/:id', function (req, res) {
     }
   });
 });
-
 app.get('/edit/:id', loggedIn, function (req, res) {
   database.getLink(req.params.id, function(obj) {
     let objSend = {};
@@ -132,7 +120,6 @@ app.get('/', (req, res) => {
 app.get('*', (req, res) => {
   let obj = {user: req.user};
   res.render(req.url, obj);
-
 });
 
 app.listen(PORT, function () {

@@ -73,9 +73,3 @@ export class Dashboard extends Component {
 }
 
 export default Dashboard;
-
-// <div className="late_poll">
-//   {arr.map(function(poll){
-//     return <PollPill key={poll._id} objPoll={poll}/>;
-//   })}
-// </div>

@@ -15,6 +15,7 @@ export class PollForm extends Component {
     this.titleChangeHandler = this.titleChangeHandler.bind(this);
     this.descriptionChangeHandler = this.descriptionChangeHandler.bind(this);
     this.optionsChangeHandler = this.optionsChangeHandler.bind(this);
+    this.saveForm = this.saveForm.bind(this);
   }
 
   titleChangeHandler(event) {
@@ -35,6 +36,11 @@ export class PollForm extends Component {
     this.setState({
       options: obj
     });
+  }
+
+  saveForm() {
+    if(!this.state.title) return false;
+    this.props.savePoll(this.state);
   }
 
   render() {
@@ -75,7 +81,7 @@ export class PollForm extends Component {
             <button
               className="btn btn-lg btn-success"
               id="saveFormButton"
-              onClick={()=>this.props.savePoll(this.state)}
+              onClick={()=>this.saveForm()}
               >
               Save
             </button>

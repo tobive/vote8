@@ -17,7 +17,6 @@ module.exports.getRandom = function(callback) {
     Poll.findOne().skip(random).exec(function (err, result) {
       if(err) console.error("getRandom- findOne err: ", err);
       callback(result);
-      // db.close();
     });
   });
 }
@@ -26,7 +25,6 @@ module.exports.getLatest = function(callback) {
   Poll.find({}).sort({date: -1}).limit(10).exec(function(err, result) {
     if(err) console.error("getLatest err: ", err);
     callback(result);
-    // db.close();
   });
 }
 
@@ -45,40 +43,60 @@ module.exports.getLink = function(linkID, callback) {
 }
 
 module.exports.save = function(obj, callback) {
-  Counter.findOneAndUpdate(
-  { counter: 1},
-  { $inc: { sequence: 1 }},
-  {new: true},
-  function(err, count) {
-    if(err) callback(err);
-    console.log("BANGSAT " + count.sequence)
-    let val = parseInt(count.sequence);
-    obj.link = hashids.encode(val);
-    let newPoll = new Poll(obj);
-    let promise = newPoll.save(function (err) {
-      if(err) callback(err);
-      //db.close();
+  if(!!obj) {
+    Counter.findOneAndUpdate(
+    { counter: 1},
+    { $inc: { sequence: 1 }},
+    {new: true},
+    function(err, count) {
+      if(err) {
+        console.error(err);
+        callback(err);
+      } else {
+        console.log("BANGSAT " + count.sequence)
+        let val = parseInt(count.sequence);
+        obj.link = hashids.encode(val);
+        let newPoll = new Poll(obj);
+        let promise = newPoll.save(function(err) {
+          if(err) {
+            console.error(err);
+            callback(err);
+          } else {
+            callback();
+          }
+        });
+      }
     });
-    callback();
-  });
+  } else {
+    let err = "error empty";
+    callback(err);
+  }
+
 }
 
 module.exports.votepoll = function(obj, callback) {
-  Poll.findOneAndUpdate(
-  { _id: obj._id, 'options._id': obj.key },
-  { $inc: { 'options.$.tally': 1 }},
-  { new: true},
-  function(err, res) {
-    if(err) console.error("ERROR KAMPRET ", err);
-    console.log("TALLY HO: ", res.options[0].tally);
+  if((!!obj._id)&&(!!obj.key)) {
+    Poll.findOneAndUpdate(
+    { _id: obj._id, 'options._id': obj.key },
+    { $inc: { 'options.$.tally': 1 }},
+    { new: true},
+    function(err, res) {
+      if(err) {
+        console.log("ERROR KAMPRET ", err);
+        callback(err);
+      } else {
+        callback();
+      }
+    });
+  } else {
+    let err = "error empty";
     callback(err);
-    //db.close();
-  });
+  }
 }
 
 module.exports.findUserId = function(id, callback) {
   Poll.find({_id: id}).exec(function(err, result) {
-    if(err) return err;
+    if(err) console.error(err);
     callback(result);
   });
 }
@@ -86,6 +104,6 @@ module.exports.findUserId = function(id, callback) {
 module.exports.deletePoll = function(id, callback) {
   Poll.remove({_id: id}, function(err) {
     if(err) console.error(err);
-    callback();
+    callback(err);
   })
 }

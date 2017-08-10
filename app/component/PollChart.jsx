@@ -21,7 +21,6 @@ export class PollChart extends Component {
             data.push(objtmp);
           }
         }
-        console.log("ISI DATA SKRG ADALAH: ", data);
         return(
             <PieChart width={800} height={400}>
               <Pie data={data} cx={200} cy={200}
@@ -36,9 +35,5 @@ export class PollChart extends Component {
 
 
 };
-
-// PollChart.defaultProps = {
-
-// };
 
 export default PollChart;

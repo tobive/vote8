@@ -4,7 +4,7 @@ import React from 'react';
 import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
 import Main from './component/Main.jsx';
 import CreatePoll from './component/CreatePoll.jsx';
-import Home from './component/Home.jsx';
+import HomeContent from './component/HomeContent.jsx';
 import ShowPoll from './component/ShowPoll.jsx';
 import Layout from './component/Layout.jsx';
 import Dashboard from './component/Dashboard.jsx';
@@ -16,7 +16,7 @@ module.exports = (
   <Router history={browserHistory}>
     <Route path='/' component={Layout}>
       <Route component={Main}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={HomeContent}/>
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/create' component={CreatePoll}/>
         <Route path='/vote/*' component={ShowPoll}/>

@@ -84,7 +84,6 @@ export class CreatePoll extends Component {
   }
 
   render() {
-    console.log("ISI GOBLOK GOBLOKAN ", URL);
     let empty = {};
     let modal = this.alertModal(this.state.success);
     return(

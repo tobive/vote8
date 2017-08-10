@@ -14,7 +14,6 @@ export class LatestPoll extends Component {
     fetch(URL + '/api/getLatest')
       .then((res) => res.json())
       .then((resJson) => {
-        //console.log("LATESPOLLFETCH: " + JSON.stringify(responseJson));
         this.setState({
           arrPoll: resJson
         });
@@ -26,7 +25,7 @@ export class LatestPoll extends Component {
 
   render() {
     let arr = this.state.arrPoll;
-    let xxx = this.props.goToPoll;
+    // let xxx = this.props.goToPoll;
     return(
       <div>
         <div className="late_poll_container text-left">

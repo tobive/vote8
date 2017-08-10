@@ -58,6 +58,7 @@ export class Vote extends Component {
     }
 
     submitVote(ballot) {
+      if((!ballot)||(ballot===" ")) return false;
       let obj = {
         _id: this.props.obj._id,
         key: ballot
