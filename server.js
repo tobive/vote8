@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var compress = require('compression');
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require('passport');
@@ -46,6 +47,7 @@ passport.deserializeUser(function(id, done) {
   });
 })
 
+app.use(compress());
 app.use(express.static(path.join(__dirname, '/app')));
 app.use(bodyParser.json());
 
@@ -67,6 +69,13 @@ function loggedIn(req, res, next) {
     res.redirect('/signin');
   }
 }
+
+//
+app.get('*.js', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  next();
+});
 
 //routes for api request
 app.use('/api', api);

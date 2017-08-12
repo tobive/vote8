@@ -55,7 +55,7 @@ export class PollForm extends Component {
               <label className="col-sm-2 control-label">title</label>
               <div className="col-sm-10">
                 <input type="text" className="form-control" id="title"
-                  placeholder="put the question here"
+                  placeholder="must not empty"
                   value={this.state.title}
                   onChange={this.titleChangeHandler}
                   />
