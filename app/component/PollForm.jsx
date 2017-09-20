@@ -45,49 +45,39 @@ export class PollForm extends Component {
 
   render() {
     var objPoll = this.state.poll.options;
-    console.log("INI ISI STATE.options: ", objPoll);
     return(
-      <section>
-        <div className="input_box container text-center">
-          <h2>{this.props.header}</h2>
-          <div className="form-horizontal">
-            <div className="form-group">
-              <label className="col-sm-2 control-label">title</label>
-              <div className="col-sm-10">
-                <input type="text" className="form-control" id="title"
-                  placeholder="must not empty"
+      <div className="create-form--container">
+        <h1>{this.props.header}</h1>
+        <form>
+          <div className="form-row">
+            <label for="title" className="form-label">title</label>
+            <input id="title" name="title"
+                  type="text" placeholder="<must not empty>"
                   value={this.state.title}
-                  onChange={this.titleChangeHandler}
-                  />
-              </div>
-              <label className="col-sm-2 control-label">description</label>
-              <div className="col-sm-10">
-                <textarea className="form-control" rows="3"
-                  placeholder="< optional >"
-                  id="description"
-                  value={this.state.description}
-                  onChange={this.descriptionChangeHandler}
-                  />
-              </div>
-              <div className="col-sm-12"><br/></div>
-              <label className="col-sm-2 control-label">options</label>
-              <OptionFormAdd
-                options={this.state.poll.options}
-                onChange={this.optionsChangeHandler}
-                />
-            </div>
+                  onChange={this.titleChangeHandler}/>
           </div>
-          <div>
-            <button
-              className="btn btn-lg btn-success"
-              id="saveFormButton"
-              onClick={()=>this.saveForm()}
-              >
-              Save
-            </button>
+          <div className="form-row">
+            <label for="description" className="form-label">description</label>
+            <textarea id="description" name="description"
+                      rows="3" placeholder="<optional>"
+                      value={this.state.description}
+                      onChange={this.descriptionChangeHandler}
+                      />
           </div>
+          <div className="form-row">
+            <label for="options" className="form-label">options</label>
+            <OptionFormAdd
+              options={this.state.poll.options}
+              onChange={this.optionsChangeHandler}
+              />
+          </div>
+        </form>
+        <div className="button-create">
+          <button id="saveFormButton" onClick={()=>this.saveForm()}>
+            Save
+          </button>
         </div>
-      </section>
+      </div>
     );
   }
 }

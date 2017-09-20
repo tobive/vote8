@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Modal} from 'react-bootstrap';
 const URL = require('../../config/main.js').MAIN_URL;
 
 export class Vote extends Component {
@@ -7,9 +6,7 @@ export class Vote extends Component {
       super(props);
       this.state = {
         ballot: " ",
-        disabled: "",
-        showModal: false,
-        success: true
+        disabled: ""
       };
       this.open = this.open.bind(this);
       this.close = this.close.bind(this);
@@ -17,41 +14,33 @@ export class Vote extends Component {
       this.submitVote = this.submitVote.bind(this);
     }
 
-    open() {
-      this.setState({ showModal: true });
+    open(success) {
+      let overlay = document.querySelector('.overlay');
+      if(success) {
+        let successModal = document.querySelector('.info--modal.success');
+        overlay.style.display = 'block';
+        successModal.classList.toggle('open');
+      } else {
+        let failModal = document.querySelector('.info--modal.fail');
+        overlay.style.display = 'block';
+        failModal.classList.toggle('open');
+      }
     }
 
-    close() {
-      this.setState({ showModal: false });
-    }
-
-    alertModal(success) {
-      let msgSuccess = (
-        <div className="alert alert-success">
-          <strong>Voted!</strong> Thank you for voting!
-        </div>
-      );
-      let msgFailed = (
-        <div className="alert alert-danger">
-          <strong>Failed!</strong> Sorry. There's some problem with server. Please Try Again later
-        </div>
-      );
-      let msg = success ? msgSuccess : msgFailed;
-      return (
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-          </Modal.Header>
-          <Modal.Body>
-            {msg}
-          </Modal.Body>
-          <Modal.Footer>
-          </Modal.Footer>
-        </Modal>
-      );
+    close(success) {
+      let overlay = document.querySelector('.overlay');
+      if(success) {
+        let successModal = document.querySelector('.info--modal.success');
+        successModal.classList.remove('open');
+        overlay.style.display = 'none';
+      } else {
+        let failModal = document.querySelector('.info--modal.fail');
+        failModal.classList.remove('open');
+        overlay.style.display = 'none';
+      }
     }
 
     selectedValue(event) {
-        console.log("from selectedValue: "+event.target.value);
         this.setState({
           ballot: event.target.value
         });
@@ -63,7 +52,6 @@ export class Vote extends Component {
         _id: this.props.obj._id,
         key: ballot
       };
-      console.log("FROM SUBMIT VOTE " + JSON.stringify(obj));
       fetch(URL + '/api/postvote', {
         method: 'post',
         headers: new Headers({
@@ -73,53 +61,54 @@ export class Vote extends Component {
         credentials: 'include'
       })
         .then(res => {
-          console.log(res);
-          if(res.status == 200) {
-            this.setState({ disabled: true, showModal: true, success: true });
-            setTimeout(function() {
-              this.setState({ showModal: false });
-            }.bind(this), 2000);
-          } else {
-            this.setState({ disabled: "", showModal: true, success: false });
-            setTimeout(function() {
-              this.setState({ showModal: false });
-            }.bind(this), 2000);
+          if(res.status == 200) {//success
+            this.setState({disabled: true});
+            this.open(true);
+            setTimeout(() => {
+              this.close(true);
+            }, 2000);
+          } else {//fail
+            this.setState({disabled: ""});
+            this.open(false);
+            setTimeout(() => {
+              this.close(false);
+            }, 2000);
           }
         });
     }
 
     render() {
         let obj = this.props.obj;
-        let modal = this.alertModal(this.state.success);
         return(
-          <div>
-            <div><b>{obj.title}</b></div>
-            <div>{obj.description}</div>
-            <div className="rad-container">
+          <form className="poll-form">
+            <fieldset>
+              <legend>{this.props.legend}</legend>
+              <div className="poll-random--title">{obj.title}</div>
+              <div className="poll-random--description">{obj.description}</div>
               {obj.options.map((opt) => {
                   return (
-                    <div className="radio rad-button">
-                      <label>
-                      <input type="radio" key={opt._id} name="ballot" value={opt._id}
-                        checked={this.state.ballot === opt._id}
-                        onChange={this.selectedValue.bind(this)}/>
+                    <div key={opt._id} className="radio">
+                      <div className="radio-button--container">
+                        <input type="radio" key={opt._id} name="ballot"
+                                value={opt._id}
+                                checked={this.state.ballot === opt._id}
+                                onChange={this.selectedValue.bind(this)}/>
+                      </div>
+                      <div className="radio-label--container">
                         {opt.name}
-                      </label>
+                      </div>
                     </div>
                   );
                 })
               }
-            </div>
-            <div>
+            </fieldset>
               <button
-                type="button" className="btn btn-sm btn-success"
+                type="button" className="poll-button"
                 disabled={this.state.disabled}
                 onClick={() => this.submitVote(this.state.ballot)}>
                 Vote!
               </button>
-            </div>
-            {modal}
-          </div>
+          </form>
         );
     }
 }

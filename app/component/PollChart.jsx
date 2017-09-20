@@ -22,9 +22,9 @@ export class PollChart extends Component {
           }
         }
         return(
-            <PieChart width={800} height={400}>
-              <Pie data={data} cx={200} cy={200}
-                innerRadius={40} outerRadius={90} fill="#ECB588"
+            <PieChart width={300} height={400}>
+              <Pie data={data} cx={150} cy={150}
+                innerRadius={40} outerRadius={90} fill="#333333"
                 nameKey="name" legendType="rect"
                 animationBegin={1000}
                 label/>

@@ -21,7 +21,6 @@ export class RandomPoll extends Component {
     fetch(URL + '/api/getRandom')
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("FETCHRANDMPOL :", JSON.stringify(responseJson));
         this.setState({
           obj : responseJson
         });
@@ -33,16 +32,14 @@ export class RandomPoll extends Component {
 
   render() {
     let link = URL + "/vote/" + this.state.obj.link;
+    let legend = "Random Poll";
     return(
-      <div>
-        <div className="rand_poll_container">
-          <h4>Random Poll</h4>
-          <Vote obj={this.state.obj}/>
-          <div>
-            <a href={link}>View Result</a>
-          </div>
+      <section className="poll-random">
+        <Vote obj={this.state.obj} legend={legend}/>
+        <div>
+          <a href={link}>View Result</a>
         </div>
-      </div>
+      </section>
     );
   }
 }

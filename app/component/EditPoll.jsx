@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Modal} from 'react-bootstrap';
 import PollForm from './PollForm.jsx';
 const URL = require('../../config/main.js').MAIN_URL;
 
@@ -7,48 +6,73 @@ export class EditPoll extends Component {
   constructor(props) {
     super(props);
     const objPoll = Object.assign({}, this.props.pollServer);
-    console.log("ID Poll ini adalah::: ", this.props.pollServer._id);
     this.state = {
       id: objPoll._id,
       poll: objPoll,
-      showModal: false,
       success: true
     };
     this.saveEdited = this.saveEdited.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
+    this.openInfo = this.openInfo.bind(this);
+    this.closeInfo = this.closeInfo.bind(this);
+    this.openDialog = this.openDialog.bind(this);
+    this.closeDialog = this.closeDialog.bind(this);
   }
 
-  open() {
-    this.setState({ showModal: true });
+  openInfo(success) {
+    let editOverlay = document.querySelector('#edit-overlay');
+    let info = success ? '#edit-success' : '#edit-fail';
+    let infoModal = document.querySelector(info);
+    editOverlay.style.display = 'block';
+    infoModal.classList.toggle('open');
+
   }
 
-  close() {
-    this.setState({ showModal: false });
+  closeInfo(success) {
+    let editOverlay = document.querySelector('#edit-overlay');
+    let info = success ? '#edit-success' : '#edit-fail';
+    let infoSuccess = document.querySelector(info);
+    editOverlay.style.display = 'none';
+    infoSuccess.classList.remove('open');
+  }
+
+  openDialog() {
+    let editOverlay = document.querySelector('#edit-overlay');
+    let dialog = document.querySelector('#delete-dialog');
+    editOverlay.style.display = 'block';
+    dialog.classList.toggle('open');
+  }
+
+  closeDialog() {
+    let editOverlay = document.querySelector('#edit-overlay');
+    let dialog = document.querySelector('#delete-dialog');
+    dialog.classList.remove('open');
+    editOverlay.style.display = 'none';
   }
 
   alertModal(success) {
     let msgSuccess = (
-      <div className="alert alert-success">
-        <strong>Success!</strong> redirecting to dashboard...
+      <div id="edit-success" className="info--modal success">
+        <p><strong>Success!</strong> redirecting to dashboard...</p>
       </div>
     );
     let msgFailed = (
-      <div className="alert alert-danger">
-        <strong>Failed!</strong> Sorry. There's some problem with server. Please Try Again later
+      <div id="edit-fail" className="info--modal fail">
+        <p><strong>Failed!</strong> Sorry. There's some problem with server. Please Try Again later</p>
       </div>
     );
     let msg = success ? msgSuccess : msgFailed;
+    return msg;
+  }
+
+  dialogModal() {
     return (
-      <Modal show={this.state.showModal} onHide={this.close}>
-        <Modal.Header closeButton>
-        </Modal.Header>
-        <Modal.Body>
-          {msg}
-        </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
-      </Modal>
+      <div id="delete-dialog" className="dialog--modal">
+        <p>Do you want to delete this poll?</p>
+        <div className="dialog-button-container">
+          <button onClick={() => this.deletePoll()} className="pill blue-pill">Yes</button>
+          <button onClick={this.closeDialog} className="pill red-pill">No</button>
+        </div>
+      </div>
     );
   }
 
@@ -66,7 +90,6 @@ export class EditPoll extends Component {
       optionsTmp.push(tmp);
     }
     sendObj.editedObj.options = optionsTmp;
-    console.log("saveEdited is sendobj: ", sendObj);
 
     fetch(URL + '/api/postEdited', {
       method: 'post',
@@ -77,15 +100,18 @@ export class EditPoll extends Component {
       credentials: 'include'
     })
       .then(res => {
-        console.log(res);
         if(res.status == 200) {
-          this.setState({ showModal: true, success: true });
-          setTimeout(function() {
-            this.setState({ showModal: false });
+          this.setState({ success: true });
+          this.openInfo(true);
+          setTimeout(() => {
             window.location = URL + '/dashboard';
-          }.bind(this), 2000);
+          }, 2000);
         } else {
-          this.setState({ showModal: true, success: false });
+          this.setState({ success: false });
+          this.openInfo(false);
+          setTimeout(() => {
+            this.closeInfo(false);
+          }, 2000);
         }
       });
   }
@@ -104,35 +130,42 @@ export class EditPoll extends Component {
       credentials: 'include'
     })
       .then(res => {
-        console.log(res);
         if(res.status == 200) {
-          this.setState({ showModal: true, success: true });
-          setTimeout(function() {
-            this.setState({ showModal: false });
+          this.setState({ success: true });
+          this.closeDialog();
+          this.openInfo(true);
+          setTimeout(() => {
             window.location = URL + '/dashboard';
-          }.bind(this), 2000);
+          }, 2000);
         } else {
-          this.setState({ showModal: true, success: false });
+          this.setState({ success: false });
+          this.openInfo(false);
+          setTimeout(() => {
+            this.closeInfo(false);
+          }, 2000);
         }
       });
   }
 
   render() {
-    console.log("EDIT POLL: ", this.state.poll);
     let modal = this.alertModal(this.state.success);
+    let dialog = this.dialogModal();
     return(
-      <div>
-        <div>
-          <button className="btn btn-danger" id="deleteButton"
-            onClick={() => this.deletePoll()}>
-            DELETE
-          </button>
+      <main className="edit-container">
+        <div id="edit-overlay" className="overlay"></div>
+        <div className="edit-header">
+          <a href="/dashboard">&lt; back</a>
+          <div className="button-delete">
+            <button id="deleteButton"
+              onClick={this.openDialog}>
+              DELETE
+            </button>
+          </div>
         </div>
-        <div>
-          <PollForm header="Edit Poll" poll={this.state.poll} savePoll={this.saveEdited}/>
-        </div>
+        <PollForm header="" poll={this.state.poll} savePoll={this.saveEdited}/>
         {modal}
-      </div>
+        {dialog}
+      </main>
     );
   }
 }

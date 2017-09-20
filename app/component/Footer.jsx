@@ -2,13 +2,10 @@ import React from 'react';
 
 function Footer () {
   return (
-    <section>
-      <footer className="home_footer">
-        <div className="container">
-          <p>Designed and built by @tobive for freecodecamp. 2017. All right reserved</p>
-        </div>
-      </footer>
-    </section>
+    <footer>
+      Designed and built by <a href="https://github.com/tobive">@tobive</a> for freecodecamp. 2017. All right reserved.<br/>
+      Svg logo for Twitter and Github by <a href="https://github.com/danklammer/bytesize-icons">@danklammer</a>
+    </footer>
   );
 }
 

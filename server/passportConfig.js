@@ -20,7 +20,6 @@ var twitterLogin = new TwitterStrategy({
         done(null, me)
       })
     } else {
-      console.log(u);
       done(null, u);
     }
   })
@@ -43,7 +42,6 @@ var githubLogin = new GithubStrategy({
         done(null, me)
       })
     } else {
-      console.log(u);
       done(null, u);
     }
   })

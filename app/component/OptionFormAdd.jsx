@@ -60,7 +60,6 @@ export class OptionFormAdd extends Component {
   }
 
   handleInputChange(event) {
-    //console.log("start handleInputChange: ", event.target.value);
     const value = event.target.value;
     const _id = event.target.id;
     const optionNew = this.state.options;
@@ -86,7 +85,7 @@ export class OptionFormAdd extends Component {
     var arrPrintedOption = this.state.arrOptionForm;
     var optionProp = this.props.options;
     return(
-      <div>
+      <div className="form--options">
         {
           arrPrintedOption.map((x,i) => {
             let value = this.returnValue(x);
@@ -103,18 +102,15 @@ export class OptionFormAdd extends Component {
             );
           })
         }
-        <div className="col-sm-2"></div>
-        <div className="col-sm-10">
-          <button
-            className="form-control btn btn-warning"
-            onClick={
-              this.addOption
-            }
-            >
-            <span className="glyphicon glyphicon-plus"></span>
-            &nbsp; Add Option
-          </button>
-        </div>
+        <button
+          type="button"
+          className="edit-option--button"
+          onClick={
+            this.addOption
+          }
+          >
+          &nbsp;+ Add Option
+        </button>
       </div>
     );
   }

@@ -5,11 +5,11 @@ function PollPill (props) {
   let link = URL + "/vote/" + props.objPoll.link;
 
   return(
-    <div className="btn-group btn-group-justified">
-      <a className="btn btn-default" href={link}>
+    <li className="poll-latest--item">
+      <a href={link}>
         {props.objPoll.title}
       </a>
-    </div>
+    </li>
   );
 }
 

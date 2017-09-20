@@ -94,7 +94,6 @@ app.get('/vote/:id', function (req, res) {
       res.render('/error404', objSend);
     } else {
       objSend.pollServer = obj[0];
-      console.log("SENDING VOTE/ :", JSON.stringify(obj));
       res.render(req.url, objSend);
     }
   });
@@ -107,7 +106,6 @@ app.get('/edit/:id', loggedIn, function (req, res) {
       res.render('/error404', objSend);
     } else {
       objSend.pollServer = obj[0];
-      console.log("SENDING /EDIT :", JSON.stringify(obj));
       res.render(req.url, objSend);
     }
   });

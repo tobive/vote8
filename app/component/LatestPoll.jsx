@@ -25,18 +25,15 @@ export class LatestPoll extends Component {
 
   render() {
     let arr = this.state.arrPoll;
-    // let xxx = this.props.goToPoll;
     return(
-      <div>
-        <div className="late_poll_container text-left">
-          <h3><b>Latest Poll</b></h3>
-          <div className="late_poll">
-            {arr.map(function(poll){
-              return <PollPill key={poll._id} objPoll={poll}/>;
-            })}
-          </div>
-        </div>
-      </div>
+      <section className="poll-latest">
+        <h2>Latest Poll</h2>
+        <ul className="poll-latest--list">
+        {arr.map(function(poll){
+          return <PollPill key={poll._id} objPoll={poll}/>;
+        })}
+        </ul>
+      </section>
     );
   }
 }

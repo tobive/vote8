@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Vote from './Vote.jsx';
 import PollChart from './PollChart.jsx';
+const URL = require('../../config/main.js').MAIN_URL;
 
 export class ShowPoll extends Component {
     constructor(props) {
@@ -14,11 +15,9 @@ export class ShowPoll extends Component {
 
     renderChart() {
       return (
-        <div className="show_right col-sm-6">
-          <div className="poll_chart text-center">
-            <PollChart options={this.state.poll.options} />
-          </div>
-        </div>
+        <section className="graph-container">
+          <PollChart options={this.state.poll.options} />
+        </section>
       );
     }
 
@@ -27,23 +26,22 @@ export class ShowPoll extends Component {
     }
 
     render() {
-        console.log("INSIDE SHOWPOLL: ", this.props.pollServer);
         let poll = this.state.poll;
+        let link = URL + "/vote/" + poll.link;
         let chart = "";
         if(this.state.active) {
           chart = this.renderChart();
         }
         return(
-          <div>
-            <div className="row">
-              <div className="show_left col-sm-6">
-                <div className="poll_box text-center">
-                  <Vote obj={poll}/>
-                </div>
-              </div>
-            {chart}
+          <main>
+            <div className="show-container">
+              <section className="poll-show">
+                <div className="link-block">{link}</div>
+                <Vote obj={poll}/>
+              </section>
+              {chart}
             </div>
-          </div>
+          </main>
         );
     }
 }

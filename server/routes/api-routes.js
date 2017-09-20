@@ -3,21 +3,27 @@ var router = express.Router();
 var database = require('../database');
 
 router.post('/postnew', function (req, res) {
-  console.log("from " + req.user + " from server.js: POSTNEW " + JSON.stringify(req.body));
   req.body.userid = req.user ? req.user._id : 1;
   req.body.date = new Date();
-  database.save(req.body, (err) => {
-    if(err) return res.sendStatus(401);
-    console.log("SAVED NEW POLL");
-    res.sendStatus(200);
+  database.save(req.body, (err, link) => {
+    let response = {
+      status: "",
+      link: ""
+    };
+    if(err) {
+      response.status = 401;
+    } else {
+      console.log("New Poll Saved: ", response.link);
+      response.status = 200;
+      response.link = link;
+    }
+    res.json(response);
   });
 });
 
 router.post('/postvote', function (req, res) {
-  console.log("from server.js: POSTVOTE " + JSON.stringify(req.body));
   database.votepoll(req.body, (err) => {
     if(err) return res.sendStatus(400);
-    console.log("VOTED!");
     res.sendStatus(200);
   });
 });
@@ -37,7 +43,6 @@ router.get('/getLatest', function (req, res) {
 });
 
 router.post('/postEdited', function (req, res) {
-  console.log("from " + req.user._id + " from server.js: POSTEDITED " + JSON.stringify(req.body));
   if(req.user) {
     database.findUserId(req.body.pollId, (result) => {
       if(req.user._id == result[0].userid) {//check if poll is owned by user
@@ -48,7 +53,7 @@ router.post('/postEdited', function (req, res) {
           console.log("SUCCESS DELETING ", req.body.pollId);
           database.save(req.body.editedObj, (err) => {
             if(err) return res.sendStatus(400);
-            console.log("SUCCESS EDITED POLL");
+            console.log("SUCCESS EDITING POLL");
             res.sendStatus(200);
           });
         });
@@ -71,12 +76,10 @@ router.post('/deletePoll', function (req, res) {
           res.sendStatus(200);
         });
       } else {
-        console.log("\n\nERROR DI SINI\n\n");
         res.sendStatus(403);
       }
     });
   } else {
-    console.log("\n\nERROR DI SANA\n\n");
     res.sendStatus(403);
   }
 })

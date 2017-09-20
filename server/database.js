@@ -13,7 +13,6 @@ module.exports.getRandom = function(callback) {
   Poll.count().exec(function (err, count) {
     if(err) console.error("getRandom- count err: ", err);
     var random = Math.floor(Math.random() * count);
-    console.log("RANDOM NYA: " + random);
     Poll.findOne().skip(random).exec(function (err, result) {
       if(err) console.error("getRandom- findOne err: ", err);
       callback(result);
@@ -53,23 +52,22 @@ module.exports.save = function(obj, callback) {
         console.error(err);
         callback(err);
       } else {
-        console.log("BANGSAT " + count.sequence)
         let val = parseInt(count.sequence);
         obj.link = hashids.encode(val);
         let newPoll = new Poll(obj);
         let promise = newPoll.save(function(err) {
           if(err) {
             console.error(err);
-            callback(err);
+            callback(err, null);
           } else {
-            callback();
+            callback(null, obj.link);
           }
         });
       }
     });
   } else {
     let err = "error empty";
-    callback(err);
+    callback(err, null);
   }
 
 }
@@ -82,7 +80,6 @@ module.exports.votepoll = function(obj, callback) {
     { new: true},
     function(err, res) {
       if(err) {
-        console.log("ERROR KAMPRET ", err);
         callback(err);
       } else {
         callback();

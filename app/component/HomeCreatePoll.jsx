@@ -3,16 +3,24 @@ import {Link} from 'react-router';
 
 function HomeCreatePoll (props) {
   return(
-    <div className="jumbotron">
-      <h1>Create Your Own Poll Now!</h1>
-      <p className="lead">Put some cool sounding advertisement here. Whatever dude
-      </p>
-      <p>
-        <Link className="btn btn-lg btn-success" to="/create">
+    <section className="hero">
+      <div className="hero--article">
+        <h2>Create Your Own Poll Now!</h2>
+        <p>Join today with the latest voting application powered by React and Node JS.
+            'So what's so great about it', you said?
+            Well, it's React JS. Everyone's talking about it nowadays.
+            I know you don't need that for such simple app, but still. It's React.
+        </p>
+        <p>
+          Put cool sounding advertisement here
+        </p>
+      </div>
+      <Link to="/create">
+        <div className="hero-button">
           Create Poll
-        </Link>
-      </p>
-    </div>
+        </div>
+      </Link>
+    </section>
   );
 }
 

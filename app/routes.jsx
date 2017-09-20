@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
-import Main from './component/Main.jsx';
+import Main from './component/MainContainer.jsx';
 import CreatePoll from './component/CreatePoll.jsx';
 import HomeContent from './component/HomeContent.jsx';
 import ShowPoll from './component/ShowPoll.jsx';

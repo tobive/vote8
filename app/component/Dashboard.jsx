@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import PollPill from './PollPill.jsx';
-import {ListGroup, ListGroupItem} from 'react-bootstrap';
 const URL = require('../../config/main.js').MAIN_URL;
 
 export class Dashboard extends Component {
@@ -14,34 +13,37 @@ export class Dashboard extends Component {
 
   renderListGroup(polls) {
     return (
-      <ListGroup>
+      <tbody>
         {polls.map((poll)=>{
           let date = new Date(poll.date);
           let link = URL + "/edit/" + poll.link;
           let voteLink = URL + "/vote/" + poll.link;
           return(
-            <ListGroupItem header={poll.title}>
-              <a className="pull-right btn btn-xs btn-danger" href={link}>
-                Edit
-              </a>
-              {date.toString().substring(0,24)}<br/>
-              {voteLink}
-            </ListGroupItem>
+            <tr>
+              <td>
+                <a href={link}>
+                  <div className="edit-option--button button--td">
+                    Edit
+                  </div>
+                </a>
+              </td>
+              <td className="title--td">{poll.title}</td>
+              <td className="date--td">{date.toString().substring(0,24)}</td>
+              <td className="link--td">{voteLink}</td>
+            </tr>
           );
         })}
-      </ListGroup>
+      </tbody>
     );
   }
 
   componentDidMount() {
-    console.log("AWAWAWAWAWAJIIIIIII");
     fetch(URL + '/api/getPollByUser', {
       method: 'get',
       credentials: 'include'
     })
       .then(res => res.json())
       .then(resJson => {
-        console.log("ISINYA DSAHBOARD HABIS MINTA ", resJson);
         this.setState({
           arrPoll: resJson
         });
@@ -54,20 +56,30 @@ export class Dashboard extends Component {
     let id = this.props.user ? this.props.user._id : "";
     let arr = this.state.arrPoll;
     return(
-      <div>
-        <div>
-          WELCOME, {name} TO YOUR DASHBOARD. ID: {id}
-        </div>
-        <div>
-          <Link className="btn btn-lg btn-success" to="/create">
-            Create New Poll
+      <main className="main-dashboard">
+        <section className="dashboard-1">
+          <h1>Welcome back, {name}</h1>
+          <p>Create new poll or manage your polls</p>
+          <Link to="/create">
+            <div className="dashboard-create">
+              Create New Poll
+            </div>
           </Link>
-        </div>
-        <div className="late_poll_container">
-          <h3><b>Manage Your Polls</b></h3>
-          {this.renderListGroup(arr)}
-        </div>
-      </div>
+        </section>
+        <section className="table-dashboard">
+          <table className="poll-list--table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            {this.renderListGroup(arr)}
+          </table>
+        </section>
+      </main>
     );
   }
 }
