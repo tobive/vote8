@@ -28,15 +28,3 @@ module.exports = (
     </Route>
   </Router>
 );
-
-// <BrowserRouter>
-//   <Layout>
-//     <Main>
-//       <Switch>
-//         <Route exact path='/' component={Home}/>
-//         <Route path='/create' component={CreatePoll}/>
-//         <Route path='/vote' component={ShowPoll}/>
-//       </Switch>
-//     </Main>
-//   </Layout>
-// </BrowserRouter>
