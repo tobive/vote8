@@ -1,11 +1,15 @@
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GithubStrategy = require('passport-github').Strategy;
 var User = require('./db/userdb');
-const URL = require('../config/main').MAIN_URL;
+const URL = process.env.APP_URL || require('../config/main').MAIN_URL;
+const TWITTER_KEY = process.env.TWITTER_LOGIN_KEY;
+const TWITTER_SECRET = process.env.TWITTER_LOGIN_SECRET;
+const GITHUB_ID = process.env.GITHUB_LOGIN_ID;
+const GITHUB_SECRET = process.env.GITHUB_LOGIN_SECRET;
 
 var twitterLogin = new TwitterStrategy({
-  consumerKey: 'PYa4lrVGc4c6RFPKfphtUV39W',
-  consumerSecret: 'wJzykGLMsfPSAkjNflrw1JAYrY7kMgknqYLeD9xdAKO4WnKqTY',
+  consumerKey: TWITTER_KEY,
+  consumerSecret: TWITTER_SECRET,
   callbackURL: URL + '/auth/twitter/callback',
   includeEmail: true
 }, function(token, tokenSecret, profile, done) {
@@ -26,8 +30,8 @@ var twitterLogin = new TwitterStrategy({
 });
 
 var githubLogin = new GithubStrategy({
-  clientID: 'f02a0084d7bec0fbf8e2',
-  clientSecret: '75d889e5c67cf7f522725acec596350802130e59',
+  clientID: GITHUB_ID,
+  clientSecret: GITHUB_SECRET,
   callbackURL: URL + '/auth/github/callback',
   scope: 'user:email'
 }, function(token, tokenSecret, profile, done) {

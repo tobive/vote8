@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import PollPill from './PollPill.jsx';
-const URL = require('../../config/main.js').MAIN_URL;
+const URL = process.env.APP_URL || require('../../config/main.js').MAIN_URL;
 
 export class Dashboard extends Component {
   constructor(props) {

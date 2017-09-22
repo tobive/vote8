@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-const URL = require('../../config/main.js').MAIN_URL;
+const URL = process.env.APP_URL || require('../../config/main.js').MAIN_URL;
 
 export class Vote extends Component {
     constructor(props) {

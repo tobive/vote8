@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var compress = require('compression');
@@ -10,7 +11,7 @@ var database = require('./server/database');
 var api = require('./server/routes/api-routes');
 var auth = require('./server/routes/auth-routes');
 const PORT = process.env.PORT || 8000;
-const DB = require('./config/main').DATABASE;
+const DB = process.env.MONGO_URI || require('./config/main').DATABASE;
 
 //react-engine configuration
 import ReactEngine from 'react-engine';

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Vote from './Vote.jsx';
-const URL = require('../../config/main.js').MAIN_URL;
+const URL = process.env.APP_URL || require('../../config/main.js').MAIN_URL;
 
 export class RandomPoll extends Component {
   constructor(props) {

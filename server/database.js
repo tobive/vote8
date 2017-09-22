@@ -5,9 +5,6 @@ var Poll = require('./db/polldb');
 var Counter = require('./db/counterdb')
 var Hashids = require('hashids');
 var hashids = new Hashids();
-const URL = process.env.MONGOLAB_URI || '//localhost/';
-const DB_NAME = 'test8';
-
 
 module.exports.getRandom = function(callback) {
   Poll.count().exec(function (err, count) {

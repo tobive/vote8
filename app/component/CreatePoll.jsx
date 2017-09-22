@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PollForm from './PollForm.jsx';
-const URL = require('../../config/main.js').MAIN_URL;
+const URL = process.env.APP_URL || require('../../config/main.js').MAIN_URL;
 
 export class CreatePoll extends Component {
   constructor(props) {
