@@ -13,6 +13,15 @@ var auth = require('./server/routes/auth-routes');
 const PORT = process.env.PORT || 8000;
 const DB = process.env.MONGO_URI || require('./config/main').DATABASE;
 
+//Headers to make API Request so that server allows cors
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 //react-engine configuration
 import ReactEngine from 'react-engine';
 import routes from './app/routes.jsx';
@@ -53,7 +62,7 @@ app.use(express.static(path.join(__dirname, '/app')));
 app.use(bodyParser.json());
 
 //app.use for passport
-app.use(require('express-session')({
+app.use(require('cookie-session')({
   secret: 'uemura rina',
   resave: false,
   saveUninitialized: false
