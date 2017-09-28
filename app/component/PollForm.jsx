@@ -50,14 +50,14 @@ export class PollForm extends Component {
         <h1>{this.props.header}</h1>
         <form>
           <div className="form-row">
-            <label for="title" className="form-label">title</label>
+            <label htmlFor="title" className="form-label">title</label>
             <input id="title" name="title"
                   type="text" placeholder="<must not empty>"
                   value={this.state.title}
                   onChange={this.titleChangeHandler}/>
           </div>
           <div className="form-row">
-            <label for="description" className="form-label">description</label>
+            <label htmlFor="description" className="form-label">description</label>
             <textarea id="description" name="description"
                       rows="3" placeholder="<optional>"
                       value={this.state.description}
@@ -65,7 +65,7 @@ export class PollForm extends Component {
                       />
           </div>
           <div className="form-row">
-            <label for="options" className="form-label">options</label>
+            <label htmlFor="options" className="form-label">options</label>
             <OptionFormAdd
               options={this.state.poll.options}
               onChange={this.optionsChangeHandler}
